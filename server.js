@@ -8,7 +8,7 @@ const PORT = process.env.PORT || 5555;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use("/homes", homeRoute);
+app.use("/api/homes", homeRoute);
 
 module.exports = start = async () => {
   try {
