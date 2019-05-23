@@ -91,17 +91,10 @@ const removeOne = model => async (req, res) => {
   }
 };
 
-// module.exports = crudControllers = model => {
-//   getAll(model),
-//     getOne(model),
-//     createOne(model),
-//     updateOne(model),
-//     removeOne(model);
-// };
-module.exports = {
-  getAll,
-  getOne,
-  createOne,
-  updateOne,
-  removeOne
-};
+module.exports = crudControllers = model => ({
+  getAll: getAll(model),
+  getOne: getOne(model),
+  createOne: createOne(model),
+  updateOne: updateOne(model),
+  removeOne: removeOne(model)
+});
