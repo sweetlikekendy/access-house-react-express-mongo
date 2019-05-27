@@ -1,14 +1,16 @@
 require("dotenv").config();
 const express = require("express");
+const cors = require("cors");
 const connect = require("./connect");
 const homeRoute = require("./resources/home.router");
 const app = express();
 const PORT = process.env.PORT || 5555;
 
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use("/api/homes", homeRoute);
+app.use("/homes", homeRoute);
 
 module.exports = start = async () => {
   try {

@@ -35,15 +35,18 @@ const getOne = model => async (req, res) => {
 };
 
 const createOne = model => async (req, res) => {
-  const test = {
-    address: "3 Hello Ave.",
-    city: "San Diego",
-    zip: "11100",
-    code: "0000"
+  const { address, city, zip, code } = req.body;
+  const newHome = {
+    address,
+    city,
+    zip,
+    code
   };
+
   try {
-    const doc = await model.create(test);
-    res.status(201).json({ data: doc });
+    const doc = await model.create(newHome);
+    redir = { redirect: "/" };
+    res.status(201).json(redir);
   } catch (e) {
     console.error(e);
     res.status(400).end();

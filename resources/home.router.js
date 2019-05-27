@@ -11,23 +11,10 @@ router.post("/", controllers.createOne);
 // Get a single home by id
 router.get("/:id", controllers.getOne);
 
-// Update a single home by id
-router.put("/:id", controllers.updateOne);
+// Edit a single home by id
+router.put("/:id/edit", controllers.updateOne);
 
 // Delete a single home by id
-router.delete("/:id", controllers.removeOne);
-
-// Create mongoose document
-// connect()
-//   .then(async connection => {
-//     const home = await Home.create({
-//       address: "1234 Home Ave.",
-//       city: "San Diego",
-//       zip: "92101",
-//       code: "0000"
-//     });
-//     console.log(home);
-//   })
-//   .catch(err => console.error(err));
+router.delete("/:id/delete", controllers.removeOne);
 
 module.exports = router;
