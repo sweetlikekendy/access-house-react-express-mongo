@@ -1,8 +1,11 @@
 import React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import Homes from "./Homes";
+import Home from "./Home";
 import AddHomeForm from "./AddHomeForm";
 import Header from "./Header";
+import Main from "./Main";
+import UpdateHomeForm from "./UpdateHomeForm";
 
 class App extends React.Component {
   state = {
@@ -30,11 +33,25 @@ class App extends React.Component {
       <Router>
         <div className="App">
           <Header />
-          <AddHomeForm />
+          <Route exact path="/addHome" component={AddHomeForm} />
           <Route
-            path="/"
+            exact
+            path="/homes"
             render={props => <Homes {...props} homes={this.state.homes} />}
           />
+          <Route
+            exact
+            path="/homes/:id"
+            render={props => <Home {...props} homes={this.state.homes} />}
+          />
+          <Route
+            exact
+            path="/homes/:id/edit"
+            render={props => (
+              <UpdateHomeForm {...props} homes={this.state.homes} />
+            )}
+          />
+          <Route exact path="/" component={Main} />
         </div>
       </Router>
     );

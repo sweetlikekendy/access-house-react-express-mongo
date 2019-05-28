@@ -12,9 +12,9 @@ router.post("/", controllers.createOne);
 router.get("/:id", controllers.getOne);
 
 // Edit a single home by id
-router.put("/:id/edit", controllers.updateOne);
+router.patch("/:id/edit", controllers.updateOne);
 
 // Delete a single home by id
-router.delete("/:id/delete", controllers.removeOne);
+router.delete("/:id/", controllers.removeOne);
 
 module.exports = router;
