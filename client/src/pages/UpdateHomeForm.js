@@ -1,5 +1,32 @@
 import React, { Component } from "react";
 import axios from "axios";
+import styled from "styled-components";
+
+const StyledForm = styled.form`
+  max-width: 600px;
+  background-color: #eee;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  input {
+    border-radius: 0.25rem;
+  }
+
+  input[type="reset"] {
+    background-color: #ccc;
+    border: none;
+    color: #4caf50;
+    padding: 1rem 2rem;
+    margin: 0.5rem;
+  }
+  input[type="submit"] {
+    background-color: #4caf50;
+    border: none;
+    color: white;
+    padding: 1rem 2rem;
+    margin: 0.5rem;
+  }
+`;
 
 export default class UpdateHomeForm extends Component {
   state = {
@@ -67,12 +94,12 @@ export default class UpdateHomeForm extends Component {
 
   render() {
     return (
-      <div>
+      <>
         <h2>
           Update Home: {this.state.address}, {this.state.city}, {this.state.zip}
           , {this.state.code}
         </h2>
-        <form method="POST" onSubmit={this.handleSubmit}>
+        <StyledForm method="POST" onSubmit={this.handleSubmit}>
           <label>Address: </label>
           <input
             type="text"
@@ -111,13 +138,13 @@ export default class UpdateHomeForm extends Component {
           />
           <input type="submit" value="Submit" />
           <input
-            type="button"
+            type="reset"
             name="clearHome"
             value="Clear"
             onClick={this.clearHome}
           />
-        </form>
-      </div>
+        </StyledForm>
+      </>
     );
   }
 }

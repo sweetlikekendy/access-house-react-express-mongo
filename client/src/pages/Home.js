@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { BrowserRouter as Route, Link } from "react-router-dom";
+import { BrowserRouter as Route, Link, Redirect } from "react-router-dom";
 import axios from "axios";
 
 export default class Home extends Component {
@@ -7,8 +7,7 @@ export default class Home extends Component {
     address: "",
     city: "",
     zip: "",
-    code: "",
-    confirmRemove: false
+    code: ""
   };
 
   // Get a single home using the id from the params
@@ -43,7 +42,7 @@ export default class Home extends Component {
 
   render() {
     return (
-      <div>
+      <>
         <h2>{this.state.address}</h2>
         <p>{this.state.city}</p>
         <p>{this.state.zip}</p>
@@ -57,7 +56,7 @@ export default class Home extends Component {
           value="Delete"
           onClick={this.deleteHome}
         />
-      </div>
+      </>
     );
   }
 }

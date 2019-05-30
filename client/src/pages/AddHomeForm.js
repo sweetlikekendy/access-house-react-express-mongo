@@ -1,5 +1,32 @@
 import React, { Component } from "react";
 import axios from "axios";
+import styled from "styled-components";
+
+const StyledForm = styled.form`
+  max-width: 600px;
+  background-color: #eee;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  input {
+    border-radius: 0.25rem;
+  }
+
+  input[type="reset"] {
+    background-color: #ccc;
+    border: none;
+    color: #4caf50;
+    padding: 1rem 2rem;
+    margin: 0.5rem;
+  }
+  input[type="submit"] {
+    background-color: #4caf50;
+    border: none;
+    color: white;
+    padding: 1rem 2rem;
+    margin: 0.5rem;
+  }
+`;
 
 export default class AddHomeForm extends Component {
   state = {
@@ -49,10 +76,10 @@ export default class AddHomeForm extends Component {
 
   render() {
     return (
-      <div>
+      <>
         <h2>Add a New Home</h2>
-        <form method="POST" onSubmit={this.handleSubmit}>
-          <label>Address: </label>
+        <StyledForm method="POST" onSubmit={this.handleSubmit}>
+          <label>Address </label>
           <input
             type="text"
             name="address"
@@ -61,7 +88,7 @@ export default class AddHomeForm extends Component {
             onChange={this.handleInputChange}
             required
           />
-          <label>City: </label>
+          <label>City </label>
           <input
             type="text"
             name="city"
@@ -70,7 +97,7 @@ export default class AddHomeForm extends Component {
             onChange={this.handleInputChange}
             required
           />
-          <label>Zip code: </label>
+          <label>Zip code </label>
           <input
             type="text"
             name="zip"
@@ -79,7 +106,7 @@ export default class AddHomeForm extends Component {
             onChange={this.handleInputChange}
             required
           />
-          <label>Gate code: </label>
+          <label>Gate code </label>
           <input
             type="text"
             name="code"
@@ -90,13 +117,13 @@ export default class AddHomeForm extends Component {
           />
           <input type="submit" value="Submit" />
           <input
-            type="button"
+            type="reset"
             name="clearHome"
             value="Clear"
             onClick={this.clearHome}
           />
-        </form>
-      </div>
+        </StyledForm>
+      </>
     );
   }
 }
