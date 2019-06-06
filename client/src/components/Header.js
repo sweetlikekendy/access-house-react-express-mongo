@@ -1,11 +1,12 @@
 import React from "react";
-import Nav from "./Nav";
+import NavMenu from "./NavMenu";
 
-const Header = () => (
-  <header>
-    <h1>LOGO</h1>
-    <Nav />
-  </header>
-);
+const Header = props => {
+  return (
+    <header>
+      <NavMenu theme={props.theme} />
+    </header>
+  );
+};
 
 export default Header;

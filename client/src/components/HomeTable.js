@@ -1,5 +1,18 @@
 import React, { Component } from "react";
 import HomeRow from "./HomeRow";
+import styled from "styled-components";
+
+const StyledHomeTable = styled.table`
+  margin: 0 auto;
+  border-collapse: collapse;
+  width: 100%;
+  height: 2rem;
+  text-align: center;
+  margin-top: 2.5rem;
+  tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+`;
 
 export default class HomeTable extends Component {
   render() {
@@ -15,7 +28,7 @@ export default class HomeTable extends Component {
     });
 
     return (
-      <table>
+      <StyledHomeTable>
         <thead>
           <tr>
             <th>Address</th>
@@ -25,7 +38,7 @@ export default class HomeTable extends Component {
           </tr>
         </thead>
         <tbody>{rows.slice(0).reverse()}</tbody>
-      </table>
+      </StyledHomeTable>
     );
   }
 }

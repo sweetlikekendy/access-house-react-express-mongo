@@ -1,7 +1,14 @@
 import React from "react";
+import styled from "styled-components";
 // import { BrowserRouter as Route, Link } from "react-router-dom";
 import Searchbar from "./Searchbar";
 import HomeTable from "./HomeTable";
+
+const StyledFilterableHomeTable = styled.div`
+  width: 100%;
+  margin-top: 2rem;
+  padding: 0 2rem;
+`;
 
 class FilterableHomeTable extends React.Component {
   state = {
@@ -34,7 +41,7 @@ class FilterableHomeTable extends React.Component {
 
   render() {
     return (
-      <>
+      <StyledFilterableHomeTable>
         <h2>Homes</h2>
         <Searchbar
           filterText={this.state.filterText}
@@ -65,7 +72,7 @@ class FilterableHomeTable extends React.Component {
           )}
         </ol>
         */}
-      </>
+      </StyledFilterableHomeTable>
     );
   }
 }

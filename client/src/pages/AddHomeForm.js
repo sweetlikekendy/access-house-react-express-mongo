@@ -3,29 +3,34 @@ import axios from "axios";
 import styled from "styled-components";
 
 const StyledForm = styled.form`
-  max-width: 600px;
-  background-color: #eee;
+  max-width: 35rem;
   display: grid;
   grid-template-columns: 1fr 1fr;
-
+  grid-gap: 0.5rem;
+  margin: 2.5rem auto 0;
   input {
     border-radius: 0.25rem;
   }
 
   input[type="reset"] {
-    background-color: #ccc;
+    background-color: #eee;
     border: none;
-    color: #4caf50;
+    color: ${props => props.theme.brand};
     padding: 1rem 2rem;
     margin: 0.5rem;
   }
   input[type="submit"] {
-    background-color: #4caf50;
+    background-color: ${props => props.theme.brand};
     border: none;
     color: white;
     padding: 1rem 2rem;
     margin: 0.5rem;
   }
+`;
+
+const StyledAddHomeForm = styled.div`
+  margin-top: 2rem;
+  padding: 0 2rem;
 `;
 
 export default class AddHomeForm extends Component {
@@ -76,7 +81,7 @@ export default class AddHomeForm extends Component {
 
   render() {
     return (
-      <>
+      <StyledAddHomeForm>
         <h2>Add a New Home</h2>
         <StyledForm method="POST" onSubmit={this.handleSubmit}>
           <label>Address </label>
@@ -123,7 +128,7 @@ export default class AddHomeForm extends Component {
             onClick={this.clearHome}
           />
         </StyledForm>
-      </>
+      </StyledAddHomeForm>
     );
   }
 }

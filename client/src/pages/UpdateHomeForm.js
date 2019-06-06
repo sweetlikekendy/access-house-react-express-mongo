@@ -3,24 +3,25 @@ import axios from "axios";
 import styled from "styled-components";
 
 const StyledForm = styled.form`
-  max-width: 600px;
-  background-color: #eee;
+  max-width: 35rem;
   display: grid;
   grid-template-columns: 1fr 1fr;
+  grid-gap: 0.5rem;
+  margin: 2.5rem auto 0;
 
   input {
     border-radius: 0.25rem;
   }
 
   input[type="reset"] {
-    background-color: #ccc;
+    background-color: #eee;
     border: none;
-    color: #4caf50;
+    color: ${props => props.theme.brand};
     padding: 1rem 2rem;
     margin: 0.5rem;
   }
   input[type="submit"] {
-    background-color: #4caf50;
+    background-color: ${props => props.theme.brand};
     border: none;
     color: white;
     padding: 1rem 2rem;
@@ -28,8 +29,17 @@ const StyledForm = styled.form`
   }
 `;
 
+const StyledUpdateHomeForm = styled.div`
+  margin-top: 2rem;
+  padding: 0 2rem;
+`;
+
 export default class UpdateHomeForm extends Component {
   state = {
+    currentAddress: "",
+    currentCity: "",
+    currentZip: "",
+    currentCode: "",
     address: "",
     city: "",
     zip: "",
@@ -55,14 +65,14 @@ export default class UpdateHomeForm extends Component {
   getHome = () => {
     axios
       .get(`http://localhost:5000/homes/${this.props.match.params.id}`)
-      .then(req =>
-        this.setState({
-          address: req.data.data.address,
-          city: req.data.data.city,
-          zip: req.data.data.zip,
-          code: req.data.data.code
-        })
-      )
+      .then(req => {
+        return this.setState({
+          currentAddress: req.data.data.address,
+          currentCity: req.data.data.city,
+          currentZip: req.data.data.zip,
+          currentCode: req.data.data.code
+        });
+      })
       .catch(err => console.log(err));
   };
 
@@ -94,10 +104,10 @@ export default class UpdateHomeForm extends Component {
 
   render() {
     return (
-      <>
+      <StyledUpdateHomeForm>
         <h2>
-          Update Home: {this.state.address}, {this.state.city}, {this.state.zip}
-          , {this.state.code}
+          Update Home: {this.state.currentAddress},{this.state.currentCity},
+          {this.state.currentZip},{this.state.currrentCode}
         </h2>
         <StyledForm method="POST" onSubmit={this.handleSubmit}>
           <label>Address: </label>
@@ -144,7 +154,7 @@ export default class UpdateHomeForm extends Component {
             onClick={this.clearHome}
           />
         </StyledForm>
-      </>
+      </StyledUpdateHomeForm>
     );
   }
 }
