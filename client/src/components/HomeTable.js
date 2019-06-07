@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import HomeRow from "./HomeRow";
+import { BrowserRouter as Route, Link } from "react-router-dom";
 import styled from "styled-components";
+import HomeRow from "./HomeRow";
 
 const StyledHomeTable = styled.table`
   margin: 0 auto;
@@ -29,15 +30,23 @@ export default class HomeTable extends Component {
 
     return (
       <StyledHomeTable>
-        <thead>
-          <tr>
-            <th>Address</th>
-            <th>City</th>
-            <th>Zip Code</th>
-            <th>Gate Code</th>
-          </tr>
-        </thead>
-        <tbody>{rows.slice(0).reverse()}</tbody>
+        {rows && rows.length ? (
+          <>
+            <thead>
+              <tr>
+                <th>Address</th>
+                <th>City</th>
+                <th>Zip Code</th>
+                <th>Gate Code</th>
+              </tr>
+            </thead>
+            <tbody>{rows.slice(0).reverse()}</tbody>
+          </>
+        ) : (
+          <p>
+            No homes added. Please add a home <Link to="/addHome">here</Link>
+          </p>
+        )}
       </StyledHomeTable>
     );
   }

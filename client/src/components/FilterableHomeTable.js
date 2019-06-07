@@ -51,27 +51,6 @@ class FilterableHomeTable extends React.Component {
           homes={this.state.homes}
           filterText={this.state.filterText}
         />
-        {/*
-        <ol>
-          {this.state.homes && this.state.homes.length ? (
-            // slice creates a shallow copy and the beginning on the array, then reverse the order
-            this.state.homes
-              .slice(0)
-              .reverse()
-              .map(home => (
-                <li key={home._id}>
-                  <Link to={`/homes/${home._id}`}>
-                    {home.address} {home.city} {home.zip} {home.code}
-                  </Link>
-                </li>
-              ))
-          ) : (
-            <p>
-              No homes added. Please add a home <Link to="/addHome">here</Link>
-            </p>
-          )}
-        </ol>
-        */}
       </StyledFilterableHomeTable>
     );
   }
