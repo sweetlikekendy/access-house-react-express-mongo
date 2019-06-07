@@ -31,10 +31,6 @@ const StyledNav = styled.nav`
     }
   }
 
-  .bars {
-    display: none;
-  }
-
   .mobile-menu {
     display: none;
   }
@@ -52,6 +48,7 @@ const StyledNav = styled.nav`
         color: ${props => props.theme.secondaryColor};
       }
       .mobile-nav-links {
+        display: none;
         margin-top: 0.65rem;
       }
     }

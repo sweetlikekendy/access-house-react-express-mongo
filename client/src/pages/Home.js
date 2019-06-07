@@ -15,11 +15,22 @@ const StyledHome = styled.div`
     margin: 0.5rem;
   }
   input[name="deleteHome"] {
+    min-width: 50%;
     background-color: rgba(255, 0, 0, 0.7);
     color: white;
   }
   .single-home {
-    text-align: center;
+    max-width: 35rem;
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-gap: 0.5rem;
+    margin: 2.5rem auto 0;
+
+    a {
+      input {
+        width: 100%;
+      }
+    }
   }
 `;
 
@@ -64,13 +75,20 @@ export default class Home extends Component {
   render() {
     return (
       <StyledHome>
-        <h2>A Single Home</h2>
+        <h2>Home with the following information: </h2>
         <div className="single-home">
-          <h3>Address: {this.state.address}</h3>
-          <p>City: {this.state.city}</p>
-          <p>Zip Code: {this.state.zip}</p>
-          <p>Gate Code: {this.state.code}</p>
-          <Link to={`/homes/${this.props.match.params.id}/edit`}>
+          <label>Address:</label>
+          <p>{this.state.address}</p>
+          <label>City:</label>
+          <p>{this.state.city}</p>
+          <label>Zip Code:</label>
+          <p>{this.state.zip}</p>
+          <label>Gate Code:</label>
+          <p>{this.state.code}</p>
+          <Link
+            className="edit"
+            to={`/homes/${this.props.match.params.id}/edit`}
+          >
             <input type="button" name="editHome" value="Edit" />
           </Link>
           <input

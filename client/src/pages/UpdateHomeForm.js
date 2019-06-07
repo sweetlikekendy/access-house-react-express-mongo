@@ -2,12 +2,28 @@ import React, { Component } from "react";
 import axios from "axios";
 import styled from "styled-components";
 
+const StyledUpdateHomeForm = styled.div`
+  margin-top: 2rem;
+  padding: 0 2rem;
+  h3 {
+    text-align: center;
+    margin-top: 2rem;
+  }
+  .update-home {
+    max-width: 35rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 0.5rem;
+    margin: 1rem auto 0;
+  }
+`;
+
 const StyledForm = styled.form`
   max-width: 35rem;
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-gap: 0.5rem;
-  margin: 2.5rem auto 0;
+  margin: 1rem auto 0;
 
   input {
     border-radius: 0.25rem;
@@ -27,11 +43,6 @@ const StyledForm = styled.form`
     padding: 1rem 2rem;
     margin: 0.5rem;
   }
-`;
-
-const StyledUpdateHomeForm = styled.div`
-  margin-top: 2rem;
-  padding: 0 2rem;
 `;
 
 export default class UpdateHomeForm extends Component {
@@ -105,10 +116,19 @@ export default class UpdateHomeForm extends Component {
   render() {
     return (
       <StyledUpdateHomeForm>
-        <h2>
-          Update Home: {this.state.currentAddress},{this.state.currentCity},
-          {this.state.currentZip},{this.state.currrentCode}
-        </h2>
+        <h2>Update Home</h2>
+        <h3>Current Address</h3>
+        <div className="update-home">
+          <label>Address: </label>
+          <p>{this.state.currentAddress}</p>
+          <label>City: </label>
+          <p>{this.state.currentCity}</p>
+          <label>Zip Code: </label>
+          <p>{this.state.currentZip}</p>
+          <label>Gate Code: </label>
+          <p>{this.state.currentCode}</p>
+        </div>
+        <h3>Update Address</h3>
         <StyledForm method="POST" onSubmit={this.handleSubmit}>
           <label>Address: </label>
           <input
