@@ -52,7 +52,7 @@ export default class Home extends Component {
   // Get a single home using the id from the params
   getHome = () => {
     axios
-      .get(`http://localhost:5000/homes/${this.props.match.params.id}`)
+      .get(`http://localhost:5000/api/homes/${this.props.match.params.id}`)
       .then(req =>
         this.setState({
           address: req.data.data.address,

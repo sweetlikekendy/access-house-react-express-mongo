@@ -12,7 +12,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Use Routes
-app.use("/homes", homeRoute);
+app.use("/api/homes", homeRoute);
 
 // Serve static assests if in production
 if (process.env.NODE_ENV === "production") {

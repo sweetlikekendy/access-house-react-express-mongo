@@ -85,7 +85,7 @@ export default class UpdateHomeForm extends Component {
   // Get a single home using the id from the params
   getHome = () => {
     axios
-      .get(`http://localhost:5000/homes/${this.props.match.params.id}`)
+      .get(`http://localhost:5000/api/homes/${this.props.match.params.id}`)
       .then(req => {
         return this.setState({
           currentAddress: req.data.data.address,
@@ -103,12 +103,15 @@ export default class UpdateHomeForm extends Component {
     const { address, city, zip, code } = this.state;
 
     axios
-      .patch(`http://localhost:5000/homes/${this.props.match.params.id}/edit`, {
-        address,
-        city,
-        zip,
-        code
-      })
+      .patch(
+        `http://localhost:5000/api/homes/${this.props.match.params.id}/edit`,
+        {
+          address,
+          city,
+          zip,
+          code
+        }
+      )
       .then(res => {
         if (res.data.redirect === "/homes") {
           window.location = "/homes";

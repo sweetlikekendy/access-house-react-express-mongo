@@ -29,7 +29,7 @@ class FilterableHomeTable extends React.Component {
   };
 
   getHomes = () =>
-    fetch("http://localhost:5000/homes")
+    fetch("http://localhost:5000/api/homes")
       .then(res => res.json())
       .then(homes => this.setState({ homes: homes.data }))
       .catch(err => console.error(err));
