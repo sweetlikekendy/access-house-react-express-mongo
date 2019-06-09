@@ -18,6 +18,7 @@ const StyledForm = styled.form`
     color: ${props => props.theme.brand};
     padding: 1rem 2rem;
     margin: 0.5rem;
+    cursor: pointer;
   }
   input[type="submit"] {
     background-color: ${props => props.theme.brand};
@@ -25,6 +26,7 @@ const StyledForm = styled.form`
     color: white;
     padding: 1rem 2rem;
     margin: 0.5rem;
+    cursor: pointer;
   }
 `;
 

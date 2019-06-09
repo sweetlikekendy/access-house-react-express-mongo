@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { BrowserRouter as Route, Link, Redirect } from "react-router-dom";
+import { BrowserRouter as Route, Link } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
 
@@ -13,6 +13,7 @@ const StyledHome = styled.div`
     color: ${props => props.theme.brand};
     padding: 1rem 2rem;
     margin: 0.5rem;
+    cursor: pointer;
   }
   input[name="deleteHome"] {
     min-width: 50%;

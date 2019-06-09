@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import styled, { createGlobalStyle, ThemeProvider } from "styled-components";
+import { createGlobalStyle, ThemeProvider } from "styled-components";
 import FilterableHomeTable from "./FilterableHomeTable";
 import Home from "../pages/Home";
 import AddHomeForm from "../pages/AddHomeForm";

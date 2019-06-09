@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-// import { BrowserRouter as Route, Link } from "react-router-dom";
 import Searchbar from "./Searchbar";
 import HomeTable from "./HomeTable";
 
