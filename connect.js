@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 module.exports = connect = url => {
   url = process.env.dbUrl;
   return mongoose
-    .connect(url, { useNewUrlParser: true })
+    .connect(url || "mongodb://localhost/let-me-in", { useNewUrlParser: true })
     .then(() => console.log("MongoDB connected ... "))
     .catch(err => console.log(err));
 };
