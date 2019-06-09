@@ -7,6 +7,7 @@ const StyledHome = styled.div`
   margin-top: 2rem;
   padding: 0 2rem;
   input[type="button"] {
+    max-width: 40%;
     border-radius: 0.25rem;
     background-color: #eee;
     border: none;
@@ -16,7 +17,6 @@ const StyledHome = styled.div`
     cursor: pointer;
   }
   input[name="deleteHome"] {
-    min-width: 50%;
     background-color: rgba(255, 0, 0, 0.7);
     color: white;
   }
@@ -31,6 +31,12 @@ const StyledHome = styled.div`
       input {
         width: 100%;
       }
+    }
+  }
+
+  @media only screen and (max-width: 540px) {
+    input[type="button"] {
+      max-width: 70%;
     }
   }
 `;

@@ -12,21 +12,29 @@ const StyledForm = styled.form`
     border-radius: 0.25rem;
   }
 
-  input[type="reset"] {
-    background-color: #eee;
+  input[type="reset"],
+  input[type="submit"] {
     border: none;
-    color: ${props => props.theme.brand};
+    cursor: pointer;
     padding: 1rem 2rem;
     margin: 0.5rem;
-    cursor: pointer;
+    max-width: 40%;
+  }
+
+  input[type="reset"] {
+    background-color: #eee;
+    color: ${props => props.theme.brand};
   }
   input[type="submit"] {
     background-color: ${props => props.theme.brand};
-    border: none;
     color: white;
-    padding: 1rem 2rem;
-    margin: 0.5rem;
-    cursor: pointer;
+  }
+
+  @media only screen and (max-width: 600px) {
+    input[type="reset"],
+    input[type="submit"] {
+      max-width: 70%;
+    }
   }
 `;
 
