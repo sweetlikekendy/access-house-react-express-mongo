@@ -52,11 +52,7 @@ export default class Home extends Component {
   // Get a single home using the id from the params
   getHome = () => {
     axios
-      .get(
-        `https://protected-oasis-33800.herokuapp.com/api/homes/${
-          this.props.match.params.id
-        }`
-      )
+      .get(`http://localhost:5000/api/homes/${this.props.match.params.id}`)
       .then(req =>
         this.setState({
           address: req.data.data.address,
@@ -70,11 +66,7 @@ export default class Home extends Component {
 
   deleteHome = () => {
     axios
-      .delete(
-        `https://protected-oasis-33800.herokuapp.com/homes/${
-          this.props.match.params.id
-        }`
-      )
+      .delete(`http://localhost:5000/api/homes/${this.props.match.params.id}`)
       .then(res => {
         if (res.data.redirect === "/homes") {
           window.location = "/homes";

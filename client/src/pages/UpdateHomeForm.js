@@ -85,11 +85,7 @@ export default class UpdateHomeForm extends Component {
   // Get a single home using the id from the params
   getHome = () => {
     axios
-      .get(
-        `https://protected-oasis-33800.herokuapp.com/api/homes/${
-          this.props.match.params.id
-        }`
-      )
+      .get(`http://localhost:5000/api/homes/${this.props.match.params.id}`)
       .then(req => {
         return this.setState({
           currentAddress: req.data.data.address,
@@ -108,9 +104,7 @@ export default class UpdateHomeForm extends Component {
 
     axios
       .patch(
-        `https://protected-oasis-33800.herokuapp.com/api/homes/${
-          this.props.match.params.id
-        }/edit`,
+        `http://localhost:5000/api/homes/${this.props.match.params.id}/edit`,
         {
           address,
           city,
