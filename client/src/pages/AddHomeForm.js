@@ -72,7 +72,7 @@ export default class AddHomeForm extends Component {
     const { address, city, zip, code } = this.state;
 
     axios
-      .post("https://protected-oasis-33800.herokuapp.com/api/homes", {
+      .post("http://localhost:5000/api/homes", {
         address,
         city,
         zip,

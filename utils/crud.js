@@ -24,13 +24,13 @@ const getOne = model => async (req, res) => {
       .exec();
 
     if (!doc) {
-      return res.status(400).end();
+      return res.status(404).end();
     }
 
     res.status(200).json({ data: doc });
   } catch (e) {
     console.error(e);
-    res.status(400).end();
+    res.status(404).end();
   }
 };
 
@@ -89,7 +89,7 @@ const removeOne = model => async (req, res) => {
       res.status(400).end();
     }
 
-    res.status(200).json(redir);
+    res.status(204).json(redir);
   } catch (e) {
     console.error(e);
     res.status(400).end();
