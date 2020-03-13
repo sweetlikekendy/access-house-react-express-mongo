@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import styled from "styled-components";
+import { Input } from "../styles/index";
 
 export default class Searchbar extends Component {
   handleFilterTextChange = e => {
@@ -12,7 +14,8 @@ export default class Searchbar extends Component {
   render() {
     return (
       <form>
-        <input
+        <Input
+          width="100%"
           type="text"
           placeholder="Search Home Here..."
           value={this.props.filterText}

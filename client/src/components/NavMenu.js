@@ -3,10 +3,13 @@ import { BrowserRouter as Route, NavLink } from "react-router-dom";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
+import Logo from "../assets/svgr/Logo";
 
 const StyledNav = styled.nav`
   padding: 1rem;
   display: flex;
+  max-width: ${props => props.theme.pageWidth};
+  margin: 0 auto;
   justify-content: space-between;
   h1 {
     text-decoration: none;
@@ -55,6 +58,20 @@ const StyledNav = styled.nav`
   }
 `;
 
+const LogoContainer = styled.div`
+  width: 60px;
+  height: 60px;
+`;
+
+const FlexUL = styled.ul`
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  li {
+    flex-basis: 1;
+  }
+`;
+
 class NavMenu extends Component {
   handleClick = () => {
     let linksEl = document.querySelector(".mobile-nav-links");
@@ -67,7 +84,14 @@ class NavMenu extends Component {
     return (
       <StyledNav>
         <div className="menu">
-          <ul>
+          <FlexUL>
+            <li>
+              <LogoContainer>
+                <NavLink to="/">
+                  <Logo />
+                </NavLink>
+              </LogoContainer>
+            </li>
             <li>
               <NavLink to="/">Main</NavLink>
             </li>
@@ -77,7 +101,7 @@ class NavMenu extends Component {
             <li>
               <NavLink to="/addHome">Add a Home</NavLink>
             </li>
-          </ul>
+          </FlexUL>
         </div>
         <div className="mobile-menu">
           <FontAwesomeIcon
@@ -87,6 +111,13 @@ class NavMenu extends Component {
           />
           <ul className="mobile-nav-links">
             <li>
+              <LogoContainer>
+                <NavLink to="/">
+                  <Logo />
+                </NavLink>
+              </LogoContainer>
+            </li>
+            <li>
               <NavLink to="/">Main</NavLink>
             </li>
             <li>
@@ -97,9 +128,6 @@ class NavMenu extends Component {
             </li>
           </ul>
         </div>
-        <h1>
-          <NavLink to="/">LET ME IN</NavLink>
-        </h1>
       </StyledNav>
     );
   }

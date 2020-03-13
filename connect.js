@@ -8,7 +8,7 @@ module.exports = connect = url => {
     .connect(
       url ||
         "mongodb://admin:hello1991@ds135207.mlab.com:35207/heroku_tqmfppfx",
-      { useNewUrlParser: true }
+      { useUnifiedTopology: true, useNewUrlParser: true }
     )
     .then(() => console.log("MongoDB connected ... "))
     .catch(err => console.log(err));

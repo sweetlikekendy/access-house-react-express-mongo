@@ -84,8 +84,12 @@ export default class UpdateHomeForm extends Component {
 
   // Get a single home using the id from the params
   getHome = () => {
+    const BACKEND_API_URL =
+      process.env.NODE_ENV !== "production"
+        ? `http://localhost:5000/api/homes/${this.props.match.params.id}`
+        : `https://protected-oasis-33800.herokuapp.com/api/homes/${this.props.match.params.id}`;
     axios
-      .get(`http://localhost:5000/api/homes/${this.props.match.params.id}`)
+      .get(`${BACKEND_API_URL}`)
       .then(req => {
         return this.setState({
           currentAddress: req.data.data.address,
@@ -98,20 +102,20 @@ export default class UpdateHomeForm extends Component {
   };
 
   handleSubmit = e => {
+    const BACKEND_API_URL =
+      process.env.NODE_ENV !== "production"
+        ? `http://localhost:5000/api/homes/${this.props.match.params.id}`
+        : `https://protected-oasis-33800.herokuapp.com/api/homes/${this.props.match.params.id}`;
+    const { address, city, zip, code } = this.state;
     e.preventDefault();
 
-    const { address, city, zip, code } = this.state;
-
     axios
-      .patch(
-        `http://localhost:5000/api/homes/${this.props.match.params.id}/edit`,
-        {
-          address,
-          city,
-          zip,
-          code
-        }
-      )
+      .patch(`${BACKEND_API_URL}`, {
+        address,
+        city,
+        zip,
+        code
+      })
       .then(res => {
         if (res.data.redirect === "/homes") {
           window.location = "/homes";

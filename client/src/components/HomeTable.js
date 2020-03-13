@@ -4,7 +4,8 @@ import styled from "styled-components";
 import HomeRow from "./HomeRow";
 
 const StyledHomeTable = styled.table`
-  margin: 0 auto;
+  max-width: ${props => props.theme.pageWidth};
+  margin: 2rem auto;
   border-collapse: collapse;
   width: 100%;
   height: 2rem;
@@ -25,6 +26,7 @@ export default class HomeTable extends Component {
       if (home.address.indexOf(filterText) === -1) {
         return;
       }
+      console.log(home._id);
       rows.push(<HomeRow home={home} key={home._id} />);
     });
 

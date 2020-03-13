@@ -1,16 +1,24 @@
 import React from "react";
 import styled from "styled-components";
+import DeliveryLady from "../assets/svgr/DeliveryLady";
 
 const StyledMain = styled.div`
-  width: 100%;
-  margin-top: 2rem;
+  max-width: ${props => props.theme.pageWidth};
+  margin: 2rem auto;
   padding: 0 2rem;
   h2 {
     margin-top: 2rem;
   }
   p {
     margin-top: 2.5rem;
+    margin-bottom: 2.5rem;
   }
+`;
+
+const StyledContainer = styled.div`
+  margin-top: 4rem;
+  height: 500px;
+  text-align: center;
 `;
 
 const Main = () => (
@@ -22,6 +30,9 @@ const Main = () => (
       (case-sensitive). Drivers can update an existing home. Drivers are also
       allowed to delete a home.
     </p>
+    <StyledContainer>
+      <DeliveryLady />
+    </StyledContainer>
   </StyledMain>
 );
 

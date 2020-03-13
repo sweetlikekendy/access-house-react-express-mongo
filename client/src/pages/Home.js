@@ -4,7 +4,8 @@ import axios from "axios";
 import styled from "styled-components";
 
 const StyledHome = styled.div`
-  margin-top: 2rem;
+  max-width: ${props => props.theme.pageWidth};
+  margin: 2rem auto;
   padding: 0 2rem;
   input[type="button"] {
     max-width: 40%;
@@ -51,8 +52,13 @@ export default class Home extends Component {
 
   // Get a single home using the id from the params
   getHome = () => {
+    const BACKEND_API_URL =
+      process.env.NODE_ENV !== "production"
+        ? `http://localhost:5000/api/homes/${this.props.match.params.id}`
+        : `https://protected-oasis-33800.herokuapp.com/api/homes/${this.props.match.params.id}`;
+
     axios
-      .get(`http://localhost:5000/api/homes/${this.props.match.params.id}`)
+      .get(`${BACKEND_API_URL}`)
       .then(req =>
         this.setState({
           address: req.data.data.address,

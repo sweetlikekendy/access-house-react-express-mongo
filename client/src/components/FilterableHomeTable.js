@@ -4,9 +4,13 @@ import Searchbar from "./Searchbar";
 import HomeTable from "./HomeTable";
 
 const StyledFilterableHomeTable = styled.div`
-  width: 100%;
-  margin-top: 2rem;
+  max-width: ${props => props.theme.pageWidth};
+  margin: 2rem auto;
   padding: 0 2rem;
+
+  h2 {
+    margin-bottom: 1rem;
+  }
 `;
 
 class FilterableHomeTable extends React.Component {
@@ -28,11 +32,17 @@ class FilterableHomeTable extends React.Component {
     });
   };
 
-  getHomes = () =>
-    fetch("http://localhost:5000/api/homes")
+  getHomes = () => {
+    const BACKEND_API_URL =
+      process.env.NODE_ENV !== "production"
+        ? "http://localhost:5000/api/homes"
+        : "https://protected-oasis-33800.herokuapp.com/api/homes";
+
+    fetch(`${BACKEND_API_URL}`)
       .then(res => res.json())
       .then(homes => this.setState({ homes: homes.data }))
       .catch(err => console.error(err));
+  };
 
   componentDidMount() {
     this.getHomes();
