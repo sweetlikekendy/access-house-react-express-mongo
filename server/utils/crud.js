@@ -35,10 +35,11 @@ const getOne = model => async (req, res) => {
 };
 
 const createOne = model => async (req, res) => {
-  const { address, city, zip, code } = req.body;
+  const { address, city, state, zip, code } = req.body;
   const newHome = {
     address,
     city,
+    state,
     zip,
     code
   };
@@ -54,10 +55,11 @@ const createOne = model => async (req, res) => {
 };
 
 const updateOne = model => async (req, res) => {
-  const { address, city, zip, code } = req.body;
+  const { address, city, state, zip, code } = req.body;
   const updateHome = {
     address,
     city,
+    state,
     zip,
     code
   };
