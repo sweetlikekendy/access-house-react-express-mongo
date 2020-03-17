@@ -6,7 +6,8 @@ const theme = {
   fontColor: `#191D32`,
   pageWidth: `1200px`,
   formBorderColor: `#cdcdcd`,
-  formTextColor: `#cdcdcd`
+  formTextColor: `#cdcdcd`,
+  letterSpacing: `2px`
 };
 
 export default theme;

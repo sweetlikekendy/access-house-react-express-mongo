@@ -1,10 +1,10 @@
-import React, { useState, useEffect, Component } from "react";
+import React, { Component } from "react";
 import axios from "axios";
 import styled from "styled-components";
-import { Input } from "../styles";
+import { Input, Select } from "../styles";
 import theme from "../styles/theme";
 
-const { formTextColor, bg } = theme;
+const { formTextColor, letterSpacing } = theme;
 
 const FieldSet = styled.fieldset`
   border: none;
@@ -14,78 +14,51 @@ const StyledForm = styled.form`
   max-width: 35rem;
   display: flex;
   flex-wrap: wrap;
-  /* display: grid;
+  display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-areas:
     "address address"
     "city state"
     "zip gate"
-    "buttons buttons";
-  grid-gap: 0.5rem; */
+    "fake button";
+  grid-gap: 1rem;
   margin: 2.5rem auto 0;
 
   input[type="submit"] {
+    width: 200px;
     border: none;
     cursor: pointer;
-    padding: 1rem 2rem;
-    margin: 0.5rem;
-  }
-
-  input[type="reset"] {
-    background-color: #eee;
-    color: ${props => props.theme.brand};
-  }
-  input[type="submit"] {
+    padding: 1rem 1.5rem;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 2px;
     background-color: ${props => props.theme.brand};
     color: white;
-  }
-  .input-container {
-    margin: 0 1rem 1rem;
-  }
-  #address {
-    /* grid-area: address; */
-    flex-basis: 100%;
-  }
-  #city,
-  #state,
-  #zip,
-  #gate {
-    flex-basis: 40%;
-    /* grid-area: city; */
+    grid-area: button;
   }
 
-  #city,
-  #zip {
-    margin-right: 1rem;
+  #address {
+    grid-area: address;
   }
-  #state,
-  #gate {
-    /* margin-right: -1rem; */
+  #city {
+    grid-area: city;
   }
   #state {
-    /* grid-area: state; */
+    grid-area: state;
   }
   #zip {
-    /* grid-area: zip; */
+    grid-area: zip;
   }
   #gate {
-    /* grid-area: gate; */
-  }
-  #address-input {
-  }
-  #city-input {
-  }
-  #zip-input {
-  }
-  #gate-input {
+    grid-area: gate;
   }
 
   @media only screen and (max-width: 600px) {
     grid-template-columns: 1fr;
-    input[type="reset"],
+
     input[type="submit"] {
-      max-width: 100%;
-      margin: 0.5rem 0;
+      width: 100%;
+      margin: 0;
     }
 
     grid-template-areas:
@@ -94,7 +67,7 @@ const StyledForm = styled.form`
       "state"
       "zip"
       "gate"
-      "buttons";
+      "button";
   }
 `;
 
@@ -102,15 +75,6 @@ const StyledAddHomeForm = styled.div`
   max-width: ${props => props.theme.pageWidth};
   margin: 2rem auto;
   padding: 0 2rem;
-`;
-
-const ButtonGroup = styled.div`
-  grid-area: buttons;
-  display: flex;
-  flex-direction: row-reverse;
-  @media only screen and (max-width: 600px) {
-    flex-direction: column;
-  }
 `;
 
 const InputContainer = styled.div`
@@ -121,10 +85,11 @@ const InputContainer = styled.div`
     outline: none;
     background-color: #fff;
     font-size: 16px;
+    letter-spacing: ${letterSpacing};
     color: ${formTextColor};
     position: absolute;
     left: 1em;
-    top: 0.9em;
+    top: 1em;
     pointer-events: none;
     transition: ease-in-out, top 0.2s ease-in-out;
   }
@@ -134,64 +99,128 @@ const InputContainer = styled.div`
     margin-left: 4px;
   }
 
-  input:active {
-    /* & + label {
-      top: -0.75em;
-    } */
-  }
-
-  input:focus {
-    border-bottom: 2px solid black;
+  input:focus,
+  select:focus {
+    border-bottom: 2px solid gray;
   }
   .focused {
     top: -0.75em;
   }
+  .bad-input {
+    border-bottom: 2px solid #e32b2b;
+  }
+  .good-input {
+    border-bottom: 2px solid green;
+  }
+`;
+
+const ButtonContainer = styled.div`
+  grid-area: button;
+  display: flex;
+  justify-content: flex-end;
 `;
 
 export default class AddHomeForm extends Component {
   state = {
     address: "",
     city: "",
+    state: "",
     zip: "",
-    gate: ""
+    gate: "",
+    addressActive: false,
+    cityActive: false,
+    stateActive: false,
+    zipActive: false,
+    gateActive: false,
+    addressEmpty: false,
+    cityEmpty: false,
+    stateEmpty: false,
+    zipEmpty: false,
+    gateEmpty: false,
+    // Load state. If the load state is 0, that means it hasn't been in focus
+    // or value hasn't been changed
+    addressLoad: 0,
+    cityLoad: 0,
+    stateLoad: 0,
+    zipLoad: 0,
+    gateLoad: 0
+  };
+
+  // Method to set corresponding load state
+  setLoadState = name => {
+    this.setState(prevState => {
+      switch (name) {
+        case "address":
+          return {
+            addressLoad: prevState.addressLoad + 1
+          };
+        case "city":
+          return {
+            cityLoad: prevState.cityLoad + 1
+          };
+        case "state":
+          return {
+            stateLoad: prevState.stateLoad + 1
+          };
+        case "zip":
+          return {
+            zipLoad: prevState.zipLoad + 1
+          };
+        case "gate":
+          return {
+            gateLoad: prevState.gateLoad + 1
+          };
+        default:
+          console.log(`Nothing with that load`);
+          break;
+      }
+    });
   };
 
   handleInputChange = e => {
     this.setState({
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
+      [`${e.target.name}Active`]: true,
+      [`${e.target.name}Empty`]: false
     });
+
+    // get the corresponding input field
+    const inputName = e.target.name;
+    this.setLoadState(inputName);
   };
 
   inputFieldFocusIn = e => {
-    // console.log(e.target);
     // get the corresponding input field
     const inputName = e.target.name;
-    // get the corresponding label
-    const sibling = document.getElementById(`${inputName}-label`);
 
-    console.log(inputName);
-    // 2. if the input field clicked on
+    // 2. if the input field clicked on, set active to true
     if (e.target === document.activeElement) {
-      sibling.classList.add("focused");
+      this.setState({
+        [`${inputName}Active`]: true
+      });
     }
   };
   inputFieldFocusOut = e => {
-    // console.log(e.target);
     // get the corresponding input field
     const inputName = e.target.name;
-    // get the corresponding label
-    const sibling = document.getElementById(`${inputName}-label`);
 
+    // if input field is empty, set active to false, and empty to true
     if (!e.target.value) {
-      sibling.classList.remove("focused");
+      this.setState({
+        [`${inputName}Active`]: false,
+        [`${e.target.name}Empty`]: true
+      });
     }
+
+    this.setLoadState(inputName);
   };
 
-  componentDidMount() {
-    const delegate = selector => cb => e => e.target.matches(selector) && cb(e);
+  delegate = selector => cb => e => e.target.matches(selector) && cb(e);
 
-    const inputTextDelegate = delegate("input[type=text]");
-    const inputTelDelegate = delegate("input[type=tel]");
+  componentDidMount() {
+    const inputTextDelegate = this.delegate("input[type=text]");
+    const inputTelDelegate = this.delegate("input[type=tel]");
+    const inputSelectDelegate = this.delegate("select");
 
     // Text event listeners
     window.addEventListener(
@@ -213,6 +242,16 @@ export default class AddHomeForm extends Component {
       "focusout",
       inputTelDelegate(el => this.inputFieldFocusOut(el))
     );
+    // Select event listeners
+    window.addEventListener(
+      "focusin",
+      inputSelectDelegate(el => this.inputFieldFocusIn(el))
+    );
+
+    window.addEventListener(
+      "focusout",
+      inputSelectDelegate(el => this.inputFieldFocusOut(el))
+    );
   }
 
   handleSubmit = e => {
@@ -232,7 +271,6 @@ export default class AddHomeForm extends Component {
         code
       })
       .then(res => {
-        console.log(res.data);
         if (res.data.redirect === "/homes") {
           window.location = "/homes";
         }
@@ -251,17 +289,41 @@ export default class AddHomeForm extends Component {
             <InputContainer className="input-container" id="address">
               <Input
                 id="address-input"
+                // If the state is empty and the input field has not been changed or visited once,
+                // display bad input
+                className={
+                  this.state.addressEmpty
+                    ? "bad-input"
+                    : this.state.addressLoad !== 0
+                    ? "good-input"
+                    : ""
+                }
                 width="100%"
                 type="text"
                 name="address"
+                valueMaxlength="20"
+                data-missing-error="Please enter an Address Name"
+                data-parse-error="Invalid value"
                 value={this.state.address}
                 onChange={this.handleInputChange}
                 required
               />
-              <label id="address-label">Address</label>
+              <label
+                id="address-label"
+                className={this.state.addressActive ? "focused" : ""}
+              >
+                Address
+              </label>
             </InputContainer>
             <InputContainer className="input-container" id="city">
               <Input
+                className={
+                  this.state.cityEmpty
+                    ? "bad-input"
+                    : this.state.cityLoad !== 0
+                    ? "good-input"
+                    : ""
+                }
                 id="city-input"
                 width="100%"
                 type="text"
@@ -270,23 +332,48 @@ export default class AddHomeForm extends Component {
                 onChange={this.handleInputChange}
                 required
               />
-              <label id="city-label">City</label>
+              <label
+                id="city-label"
+                className={this.state.cityActive ? "focused" : ""}
+              >
+                City
+              </label>
             </InputContainer>
             <InputContainer className="input-container" id="state">
-              <Input
+              <Select
                 id="state-input"
-                width="100%"
-                type="text"
+                className={
+                  this.state.stateEmpty
+                    ? "bad-input"
+                    : this.state.stateLoad !== 0
+                    ? "good-input"
+                    : ""
+                }
                 name="state"
-                value={this.state.city}
+                data-missing-error="Please select a State"
+                data-parse-error="Invalid value"
+                data-range-error="Value too long or too short"
+                required="required"
+                value={this.state.state}
                 onChange={this.handleInputChange}
-                required
               />
-              <label id="state-label">State</label>
+              <label
+                id="state-label"
+                className={this.state.stateActive ? "focused" : ""}
+              >
+                State
+              </label>
             </InputContainer>
             <InputContainer className="input-container" id="zip">
               <Input
                 id="zip-input"
+                className={
+                  this.state.zipEmpty
+                    ? "bad-input"
+                    : this.state.zipLoad !== 0
+                    ? "good-input"
+                    : ""
+                }
                 width="100%"
                 type="tel"
                 name="zip"
@@ -294,23 +381,41 @@ export default class AddHomeForm extends Component {
                 onChange={this.handleInputChange}
                 required
               />
-              <label id="zip-label">Zip code</label>
+              <label
+                id="zip-label"
+                className={this.state.zipActive ? "focused" : ""}
+              >
+                Zip code
+              </label>
             </InputContainer>
             <InputContainer className="input-container" id="gate">
               <Input
                 id="gate-input"
+                className={
+                  this.state.gateEmpty
+                    ? "bad-input"
+                    : this.state.gateLoad !== 0
+                    ? "good-input"
+                    : ""
+                }
                 width="100%"
                 type="tel"
                 name="gate"
-                value={this.state.code}
+                value={this.state.gate}
                 onChange={this.handleInputChange}
                 required
               />
-              <label id="gate-label">Gate code</label>
+              <label
+                id="gate-label"
+                className={this.state.gateActive ? "focused" : ""}
+              >
+                Gate code
+              </label>
             </InputContainer>
-            <ButtonGroup>
+
+            <ButtonContainer>
               <input type="submit" value="SUBMIT" />
-            </ButtonGroup>
+            </ButtonContainer>
           </StyledForm>
         </FieldSet>
       </StyledAddHomeForm>
