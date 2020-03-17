@@ -177,42 +177,38 @@ export default class AddHomeForm extends Component {
     });
   };
 
-  handleInputChange = e => {
+  handleInputChange = ({ target: { name, value } }) => {
     this.setState({
-      [e.target.name]: e.target.value,
-      [`${e.target.name}Active`]: true,
-      [`${e.target.name}Empty`]: false
+      [name]: value,
+      [`${name}Active`]: true,
+      [`${name}Empty`]: false
     });
 
-    // get the corresponding input field
-    const inputName = e.target.name;
-    this.setLoadState(inputName);
+    this.setLoadState(name);
   };
 
   inputFieldFocusIn = e => {
     // get the corresponding input field
-    const inputName = e.target.name;
+    const { name } = e.target;
 
     // 2. if the input field clicked on, set active to true
     if (e.target === document.activeElement) {
       this.setState({
-        [`${inputName}Active`]: true
+        [`${name}Active`]: true
       });
     }
   };
-  inputFieldFocusOut = e => {
-    // get the corresponding input field
-    const inputName = e.target.name;
 
+  inputFieldFocusOut = ({ target: { name, value } }) => {
     // if input field is empty, set active to false, and empty to true
-    if (!e.target.value) {
+    if (!value) {
       this.setState({
-        [`${inputName}Active`]: false,
-        [`${e.target.name}Empty`]: true
+        [`${name}Active`]: false,
+        [`${name}Empty`]: true
       });
     }
 
-    this.setLoadState(inputName);
+    this.setLoadState(name);
   };
 
   delegate = selector => cb => e => e.target.matches(selector) && cb(e);
