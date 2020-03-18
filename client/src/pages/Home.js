@@ -84,7 +84,7 @@ export default class Home extends Component {
       .catch(err => console.log(err));
   };
 
-  componentDidMount() {
+  async componentDidMount() {
     this.getHome();
   }
 

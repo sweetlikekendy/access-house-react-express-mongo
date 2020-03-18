@@ -198,7 +198,7 @@ export default class AddHomeForm extends Component {
 
   delegate = selector => cb => e => e.target.matches(selector) && cb(e);
 
-  componentDidMount() {
+  async componentDidMount() {
     const inputTextDelegate = this.delegate("input[type=text]");
     const inputTelDelegate = this.delegate("input[type=tel]");
     const inputSelectDelegate = this.delegate("select");
