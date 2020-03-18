@@ -38,6 +38,7 @@ export default class HomeTable extends Component {
               <tr>
                 <th>Address</th>
                 <th>City</th>
+                <th>State</th>
                 <th>Zip Code</th>
                 <th>Gate Code</th>
               </tr>

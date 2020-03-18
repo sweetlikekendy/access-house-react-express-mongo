@@ -7,7 +7,10 @@ const theme = {
   pageWidth: `1200px`,
   formBorderColor: `#cdcdcd`,
   formTextColor: `#cdcdcd`,
-  letterSpacing: `2px`
+  letterSpacing: `2px`,
+  inputActiveColor: `#708090`,
+  goodInputColor: `#0a5`,
+  badInputColor: `#e32b2b`
 };
 
 export default theme;

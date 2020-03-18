@@ -1,10 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import styled from "styled-components";
-import { Input, Select } from "../styles";
-import theme from "../styles/theme";
-
-const { formTextColor, letterSpacing } = theme;
+import InputContainer from "../components/InputContainer";
 
 const FieldSet = styled.fieldset`
   border: none;
@@ -19,7 +16,7 @@ const StyledForm = styled.form`
   grid-template-areas:
     "address address"
     "city state"
-    "zip gate"
+    "zip code"
     "fake button";
   grid-gap: 1rem;
   margin: 2.5rem auto 0;
@@ -49,8 +46,8 @@ const StyledForm = styled.form`
   #zip {
     grid-area: zip;
   }
-  #gate {
-    grid-area: gate;
+  #code {
+    grid-area: code;
   }
 
   @media only screen and (max-width: 600px) {
@@ -66,7 +63,7 @@ const StyledForm = styled.form`
       "city"
       "state"
       "zip"
-      "gate"
+      "code"
       "button";
   }
 `;
@@ -75,43 +72,6 @@ const StyledAddHomeForm = styled.div`
   max-width: ${props => props.theme.pageWidth};
   margin: 2rem auto;
   padding: 0 2rem;
-`;
-
-const InputContainer = styled.div`
-  position: relative;
-  font-size: 18px;
-  label {
-    padding: 0 0.25rem;
-    outline: none;
-    background-color: #fff;
-    font-size: 16px;
-    letter-spacing: ${letterSpacing};
-    color: ${formTextColor};
-    position: absolute;
-    left: 1em;
-    top: 1em;
-    pointer-events: none;
-    transition: ease-in-out, top 0.2s ease-in-out;
-  }
-  label:after {
-    content: "*";
-    color: #e32b2b;
-    margin-left: 4px;
-  }
-
-  input:focus,
-  select:focus {
-    border-bottom: 2px solid gray;
-  }
-  .focused {
-    top: -0.75em;
-  }
-  .bad-input {
-    border-bottom: 2px solid #e32b2b;
-  }
-  .good-input {
-    border-bottom: 2px solid green;
-  }
 `;
 
 const ButtonContainer = styled.div`
@@ -126,24 +86,24 @@ export default class AddHomeForm extends Component {
     city: "",
     state: "",
     zip: "",
-    gate: "",
+    code: "",
     addressActive: false,
     cityActive: false,
     stateActive: false,
     zipActive: false,
-    gateActive: false,
+    codeActive: false,
     addressEmpty: false,
     cityEmpty: false,
     stateEmpty: false,
     zipEmpty: false,
-    gateEmpty: false,
+    codeEmpty: false,
     // Load state. If the load state is 0, that means it hasn't been in focus
     // or value hasn't been changed
     addressLoad: 0,
     cityLoad: 0,
     stateLoad: 0,
     zipLoad: 0,
-    gateLoad: 0
+    codeLoad: 0
   };
 
   // Method to set corresponding load state
@@ -166,9 +126,9 @@ export default class AddHomeForm extends Component {
           return {
             zipLoad: prevState.zipLoad + 1
           };
-        case "gate":
+        case "code":
           return {
-            gateLoad: prevState.gateLoad + 1
+            codeLoad: prevState.codeLoad + 1
           };
         default:
           console.log(`Nothing with that load`);
@@ -185,6 +145,31 @@ export default class AddHomeForm extends Component {
     });
 
     this.setLoadState(name);
+  };
+
+  clearHome = () => {
+    this.setState({
+      address: "",
+      city: "",
+      state: "",
+      zip: "",
+      code: "",
+      addressActive: false,
+      cityActive: false,
+      stateActive: false,
+      zipActive: false,
+      codeActive: false,
+      addressEmpty: false,
+      cityEmpty: false,
+      stateEmpty: false,
+      zipEmpty: false,
+      codeEmpty: false,
+      addressLoad: 0,
+      cityLoad: 0,
+      stateLoad: 0,
+      zipLoad: 0,
+      codeLoad: 0
+    });
   };
 
   inputFieldFocusIn = e => {
@@ -251,7 +236,7 @@ export default class AddHomeForm extends Component {
   }
 
   handleSubmit = e => {
-    const { address, city, zip, code } = this.state;
+    const { address, city, state, zip, code } = this.state;
     const BACKEND_API_URL =
       process.env.NODE_ENV !== "production"
         ? "http://localhost:5000/api/homes"
@@ -263,6 +248,7 @@ export default class AddHomeForm extends Component {
       .post(`${BACKEND_API_URL}`, {
         address,
         city,
+        state,
         zip,
         code
       })
@@ -282,133 +268,71 @@ export default class AddHomeForm extends Component {
         <h2>Add a New Home</h2>
         <FieldSet>
           <StyledForm method="POST" onSubmit={this.handleSubmit}>
-            <InputContainer className="input-container" id="address">
-              <Input
-                id="address-input"
-                // If the state is empty and the input field has not been changed or visited once,
-                // display bad input
-                className={
-                  this.state.addressEmpty
-                    ? "bad-input"
-                    : this.state.addressLoad !== 0
-                    ? "good-input"
-                    : ""
-                }
-                width="100%"
-                type="text"
-                name="address"
-                valueMaxlength="20"
-                data-missing-error="Please enter an Address Name"
-                data-parse-error="Invalid value"
-                value={this.state.address}
-                onChange={this.handleInputChange}
-                required
-              />
-              <label
-                id="address-label"
-                className={this.state.addressActive ? "focused" : ""}
-              >
-                Address
-              </label>
-            </InputContainer>
-            <InputContainer className="input-container" id="city">
-              <Input
-                className={
-                  this.state.cityEmpty
-                    ? "bad-input"
-                    : this.state.cityLoad !== 0
-                    ? "good-input"
-                    : ""
-                }
-                id="city-input"
-                width="100%"
-                type="text"
-                name="city"
-                value={this.state.city}
-                onChange={this.handleInputChange}
-                required
-              />
-              <label
-                id="city-label"
-                className={this.state.cityActive ? "focused" : ""}
-              >
-                City
-              </label>
-            </InputContainer>
-            <InputContainer className="input-container" id="state">
-              <Select
-                id="state-input"
-                className={
-                  this.state.stateEmpty
-                    ? "bad-input"
-                    : this.state.stateLoad !== 0
-                    ? "good-input"
-                    : ""
-                }
-                name="state"
-                data-missing-error="Please select a State"
-                data-parse-error="Invalid value"
-                data-range-error="Value too long or too short"
-                required="required"
-                value={this.state.state}
-                onChange={this.handleInputChange}
-              />
-              <label
-                id="state-label"
-                className={this.state.stateActive ? "focused" : ""}
-              >
-                State
-              </label>
-            </InputContainer>
-            <InputContainer className="input-container" id="zip">
-              <Input
-                id="zip-input"
-                className={
-                  this.state.zipEmpty
-                    ? "bad-input"
-                    : this.state.zipLoad !== 0
-                    ? "good-input"
-                    : ""
-                }
-                width="100%"
-                type="tel"
-                name="zip"
-                value={this.state.zip}
-                onChange={this.handleInputChange}
-                required
-              />
-              <label
-                id="zip-label"
-                className={this.state.zipActive ? "focused" : ""}
-              >
-                Zip code
-              </label>
-            </InputContainer>
-            <InputContainer className="input-container" id="gate">
-              <Input
-                id="gate-input"
-                className={
-                  this.state.gateEmpty
-                    ? "bad-input"
-                    : this.state.gateLoad !== 0
-                    ? "good-input"
-                    : ""
-                }
-                width="100%"
-                type="tel"
-                name="gate"
-                value={this.state.gate}
-                onChange={this.handleInputChange}
-                required
-              />
-              <label
-                id="gate-label"
-                className={this.state.gateActive ? "focused" : ""}
-              >
-                Gate code
-              </label>
-            </InputContainer>
-
+            <InputContainer
+              className="input-container"
+              id="address"
+              type="input"
+              name="address"
+              loadCount={this.state.addressLoad}
+              isEmpty={this.state.addressEmpty}
+              isActive={this.state.addressActive}
+              stateOfInput={this.state.address}
+              dataMissingError="Please enter an address name"
+              dataParseError="Invalid value"
+              handleInputChange={this.handleInputChange}
+            />
+            <InputContainer
+              className="input-container"
+              id="city"
+              type="input"
+              name="city"
+              loadCount={this.state.cityLoad}
+              isEmpty={this.state.cityEmpty}
+              isActive={this.state.cityActive}
+              stateOfInput={this.state.city}
+              dataMissingError="Please enter a city name"
+              dataParseError="Invalid value"
+              handleInputChange={this.handleInputChange}
+            />
+            <InputContainer
+              className="input-container"
+              id="state"
+              type="select"
+              name="state"
+              loadCount={this.state.stateLoad}
+              isEmpty={this.state.stateEmpty}
+              isActive={this.state.stateActive}
+              stateOfInput={this.state.state}
+              dataMissingError="Please enter a state"
+              dataParseError="Invalid value"
+              handleInputChange={this.handleInputChange}
+            />
+            <InputContainer
+              className="input-container"
+              id="zip"
+              type="input"
+              name="zip"
+              loadCount={this.state.zipLoad}
+              isEmpty={this.state.zipEmpty}
+              isActive={this.state.zipActive}
+              stateOfInput={this.state.zip}
+              dataMissingError="Please enter a zip code"
+              dataParseError="Invalid value"
+              handleInputChange={this.handleInputChange}
+            />
+            <InputContainer
+              className="input-container"
+              id="code"
+              type="input"
+              name="code"
+              loadCount={this.state.codeLoad}
+              isEmpty={this.state.codeEmpty}
+              isActive={this.state.codeActive}
+              stateOfInput={this.state.code}
+              dataMissingError="Please enter a gate code"
+              dataParseError="Invalid value"
+              handleInputChange={this.handleInputChange}
+            />
             <ButtonContainer>
               <input type="submit" value="SUBMIT" />
             </ButtonContainer>

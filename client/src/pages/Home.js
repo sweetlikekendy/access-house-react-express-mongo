@@ -46,6 +46,7 @@ export default class Home extends Component {
   state = {
     address: "",
     city: "",
+    state: "",
     zip: "",
     code: ""
   };
@@ -59,14 +60,16 @@ export default class Home extends Component {
 
     axios
       .get(`${BACKEND_API_URL}`)
-      .then(req =>
-        this.setState({
-          address: req.data.data.address,
-          city: req.data.data.city,
-          zip: req.data.data.zip,
-          code: req.data.data.code
-        })
-      )
+      .then(req => {
+        const { address, city, state, zip, code } = req.data.data;
+        return this.setState({
+          address,
+          city,
+          state,
+          zip,
+          code
+        });
+      })
       .catch(err => console.log(err));
   };
 
@@ -86,18 +89,21 @@ export default class Home extends Component {
   }
 
   render() {
+    const { address, city, state, zip, code } = this.state;
     return (
       <StyledHome>
         <h2>Home with the following information: </h2>
         <div className="single-home">
           <label>Address:</label>
-          <p>{this.state.address}</p>
+          {address ? <p>{address}</p> : <p>N/A</p>}
           <label>City:</label>
-          <p>{this.state.city}</p>
+          {city ? <p>{city}</p> : <p>N/A</p>}
+          <label>State:</label>
+          {state ? <p>{state}</p> : <p>N/A</p>}
           <label>Zip Code:</label>
-          <p>{this.state.zip}</p>
+          {zip ? <p>{zip}</p> : <p>N/A</p>}
           <label>Gate Code:</label>
-          <p>{this.state.code}</p>
+          {code ? <p>{code}</p> : <p>N/A</p>}
           <Link
             className="edit"
             to={`/homes/${this.props.match.params.id}/edit`}
