@@ -1,12 +1,14 @@
 import { createGlobalStyle } from "styled-components";
-import theme from "./theme";
+import { theme } from "./index";
+
+const { bg, fontColor, hrefColor, inputActiveColor } = theme;
 
 const GlobalStyle = createGlobalStyle`
   html {
     box-sizing: border-box;
     font-size: calc(16px + (18 - 14) * ((100vw - 300px) / (1600 - 300)));
-    background-color: rgba(${theme.bg});
-    color: ${theme.fontColor};
+    background-color: rgba(${bg});
+    color: ${fontColor};
   }
   *, *:before, *:after {
     box-sizing: inherit;
@@ -30,7 +32,7 @@ const GlobalStyle = createGlobalStyle`
   }
   a {
     text-decoration: none;
-    color: ${theme.hrefColor};
+    color: ${hrefColor};
     font-weight: 700;
   }
   h1, h2 {
@@ -40,6 +42,11 @@ const GlobalStyle = createGlobalStyle`
 
   input:focus, textarea:focus, select:focus{
     outline: none;
+  }
+
+  input:focus,
+  select:focus {
+    border-bottom: 2px solid ${inputActiveColor};
   }
 `;
 

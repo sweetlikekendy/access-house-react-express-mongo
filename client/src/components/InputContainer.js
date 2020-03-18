@@ -34,10 +34,6 @@ const InputStyles = styled.div`
     margin-left: 4px;
   }
 
-  input:focus,
-  select:focus {
-    border-bottom: 2px solid ${inputActiveColor};
-  }
   .focused {
     top: -0.75em;
   }
