@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-import { BrowserRouter as Route, Link } from "react-router-dom";
 import Axios from "axios";
 import styled from "styled-components";
 import * as JsSearch from "js-search";
 import Searchbar from "./Searchbar";
-import { MapMarker, Unlock, ThreeDotMenu } from "../assets/svgr/";
-import { theme } from "../styles";
+import { MapMarker, Unlock } from "../../assets/svgr";
+import { theme } from "../../styles";
+import { HomeOptionMenu } from "../HomeOptionMenu";
 
 const { fontColor, formBorderColor } = theme;
 
@@ -56,12 +56,6 @@ const ResultsQuery = styled.div`
         }
       }
     }
-    .three-dot-menu {
-      position: absolute;
-      top: 20%;
-      right: 5%;
-      cursor: pointer;
-    }
   }
   @media screen and (min-width: 768px) {
     .query-result {
@@ -80,7 +74,7 @@ const ResultsQuery = styled.div`
   }
 `;
 
-class Search extends Component {
+class SearchWithResults extends Component {
   state = {
     homeList: [],
     search: [],
@@ -229,7 +223,7 @@ class Search extends Component {
                     <p>{code}</p>
                   </div>
                 </div>
-                <ThreeDotMenu className="three-dot-menu" />
+                <HomeOptionMenu className="three-dot-menu" id={_id} />
               </div>
             );
           })}
@@ -239,4 +233,4 @@ class Search extends Component {
   }
 }
 
-export default Search;
+export default SearchWithResults;

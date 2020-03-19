@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import { Input } from "../styles/index";
-import { theme } from "../styles/index";
+import { Input } from "../../styles/index";
+import { theme } from "../../styles/index";
 
 const { brand } = theme;
 

@@ -1,8 +1,8 @@
 import React from "react";
-import SearchContainer from "../components/SearchContainer";
+import { SearchWithResults } from "../components/SearchWithResults/";
 
 const AllHomes = () => {
-  return <SearchContainer />;
+  return <SearchWithResults />;
 };
 
 export default AllHomes;
