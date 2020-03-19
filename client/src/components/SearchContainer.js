@@ -4,14 +4,79 @@ import Axios from "axios";
 import styled from "styled-components";
 import * as JsSearch from "js-search";
 import Searchbar from "./Searchbar";
+import { MapMarker, Unlock, ThreeDotMenu } from "../assets/svgr/";
+import { theme } from "../styles";
+
+const { fontColor, formBorderColor } = theme;
 
 const StyledFilterableHomeTable = styled.div`
-  max-width: ${props => props.theme.pageWidth};
+  max-width: 800px;
   margin: 2rem auto;
   padding: 0 2rem;
 
   h2 {
     margin-bottom: 1rem;
+  }
+  #search-result-text {
+    margin: 0.5rem;
+    font-size: 16px;
+  }
+`;
+
+const ResultsQuery = styled.div`
+  .query-result {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    border-bottom: 1px solid ${formBorderColor};
+    .map-marker {
+      flex-basis: 8%;
+      margin-right: 0.5rem;
+    }
+    .location {
+      flex-basis: 210px;
+      color: ${fontColor};
+      font-size: 14px;
+      display: flex;
+      flex-wrap: wrap;
+      .address,
+      .gate-code {
+        flex-basis: 100%;
+      }
+      .gate-code {
+        color: ${fontColor};
+        display: flex;
+        align-items: center;
+        #key-icon {
+          margin-right: 0.5rem;
+        }
+      }
+    }
+    .three-dot-menu {
+      position: absolute;
+      top: 20%;
+      right: 5%;
+      cursor: pointer;
+    }
+  }
+  @media screen and (min-width: 768px) {
+    .query-result {
+      .location {
+        flex-basis: 375px;
+        font-size: 16px;
+
+        .address {
+          flex-basis: 70%;
+        }
+        .gate-code {
+          flex-basis: 20%;
+        }
+      }
+    }
   }
 `;
 
@@ -141,133 +206,34 @@ class Search extends Component {
           value={searchQuery}
           searchData={this.searchData}
         />
-        <div>
-          Number of items:
-          {queryResults.length}
-          <table
-            style={{
-              width: `100%`,
-              borderCollapse: `collapse`,
-              borderRadius: `4px`,
-              border: `1px solid #d3d3d3`
-            }}
-          >
-            <thead style={{ border: `1px solid #808080` }}>
-              <tr>
-                <th
-                  style={{
-                    textAlign: `left`,
-                    padding: `5px`,
-                    fontSize: `14px`,
-                    fontWeight: 600,
-                    borderBottom: `2px solid #d3d3d3`,
-                    cursor: `pointer`
-                  }}
-                >
-                  Address
-                </th>
-                <th
-                  style={{
-                    textAlign: `left`,
-                    padding: `5px`,
-                    fontSize: `14px`,
-                    fontWeight: 600,
-                    borderBottom: `2px solid #d3d3d3`,
-                    cursor: `pointer`
-                  }}
-                >
-                  City
-                </th>
-                <th
-                  style={{
-                    textAlign: `left`,
-                    padding: `5px`,
-                    fontSize: `14px`,
-                    fontWeight: 600,
-                    borderBottom: `2px solid #d3d3d3`,
-                    cursor: `pointer`
-                  }}
-                >
-                  State
-                </th>
-                <th
-                  style={{
-                    textAlign: `left`,
-                    padding: `5px`,
-                    fontSize: `14px`,
-                    fontWeight: 600,
-                    borderBottom: `2px solid #d3d3d3`,
-                    cursor: `pointer`
-                  }}
-                >
-                  Zip
-                </th>
-                <th
-                  style={{
-                    textAlign: `left`,
-                    padding: `5px`,
-                    fontSize: `14px`,
-                    fontWeight: 600,
-                    borderBottom: `2px solid #d3d3d3`,
-                    cursor: `pointer`
-                  }}
-                >
-                  Code
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {/* eslint-disable */}
-              {queryResults.map(item => {
-                return (
-                  <tr key={`row_${item._id}`}>
-                    <td
-                      style={{
-                        fontSize: `14px`,
-                        border: `1px solid #d3d3d3`
-                      }}
-                    >
-                      <Link to={`homes/${item._id}`}>{item.address}</Link>
-                    </td>
-                    <td
-                      style={{
-                        fontSize: `14px`,
-                        border: `1px solid #d3d3d3`
-                      }}
-                    >
-                      <Link to={`homes/${item._id}`}>{item.city}</Link>
-                    </td>
-                    <td
-                      style={{
-                        fontSize: `14px`,
-                        border: `1px solid #d3d3d3`
-                      }}
-                    >
-                      <Link to={`homes/${item._id}`}>{item.state}</Link>
-                    </td>
-                    <td
-                      style={{
-                        fontSize: `14px`,
-                        border: `1px solid #d3d3d3`
-                      }}
-                    >
-                      <Link to={`homes/${item._id}`}>{item.zip}</Link>
-                    </td>
-                    <td
-                      style={{
-                        fontSize: `14px`,
-                        border: `1px solid #d3d3d3`
-                      }}
-                    >
-                      <Link to={`homes/${item._id}`}>{item.code}</Link>
-                    </td>
-                  </tr>
-                );
-              })}
-              {/* eslint-enable */}
-            </tbody>
-          </table>
-        </div>
+        <p id="search-result-text">
+          {searchQuery === ""
+            ? `${queryResults.length} items to search from`
+            : `${queryResults.length} items found from search query`}
+        </p>
+        <ResultsQuery>
+          {queryResults.map(item => {
+            const { _id, address, city, state, zip, code } = item;
+            return (
+              <div key={`${_id}`} className="query-result">
+                <MapMarker className="map-marker" />
+                <div className="location">
+                  <div className="address">
+                    <p>{address}</p>
+                    <p>
+                      {city}, {state} {zip}
+                    </p>
+                  </div>
+                  <div className="gate-code">
+                    <Unlock id="key-icon" />
+                    <p>{code}</p>
+                  </div>
+                </div>
+                <ThreeDotMenu className="three-dot-menu" />
+              </div>
+            );
+          })}
+        </ResultsQuery>
       </StyledFilterableHomeTable>
     );
   }
