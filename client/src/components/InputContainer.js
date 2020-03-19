@@ -100,7 +100,11 @@ const InputContainer = ({
           required
         />
       )}
-      <label id={`${name}-label"`} className={isActive ? "focused" : ""}>
+      <label
+        id={`${name}-label"`}
+        className={isActive ? "focused" : ""}
+        htmlFor={`${name}`}
+      >
         {capitalizeFirstLetter(name)}
       </label>
       <Cross
