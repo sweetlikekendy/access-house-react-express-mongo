@@ -22,14 +22,16 @@ export default class Searchbar extends Component {
   };
 
   render() {
+    const { value, searchData } = this.props;
+
     return (
       <Form>
         <Input
           width="100%"
           type="text"
           placeholder="Search Home Here..."
-          value={this.props.filterText}
-          onChange={this.handleFilterTextChange}
+          value={value}
+          onChange={searchData}
         />
       </Form>
     );

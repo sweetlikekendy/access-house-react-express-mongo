@@ -4,13 +4,7 @@ import styled from "styled-components";
 import { Input, Select, theme } from "../styles/index";
 import { Cross, Tick } from "../assets/svgr/index";
 
-const {
-  formTextColor,
-  letterSpacing,
-  badInputColor,
-  goodInputColor,
-  inputActiveColor
-} = theme;
+const { formTextColor, letterSpacing, badInputColor, goodInputColor } = theme;
 
 const InputStyles = styled.div`
   position: relative;
