@@ -156,7 +156,7 @@ class SearchWithResults extends Component {
             const { _id, address, city, state, zip, code } = item;
             return (
               <HomeInfo
-                _id={_id}
+                key={_id}
                 address={address}
                 city={city}
                 state={state}

@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import { Input, Select, theme } from "../styles/index";
-import { Cross, Tick } from "../assets/svgr/index";
+import { Input, Select, theme } from "../../styles/index";
+import { Cross, Tick } from "../../assets/svgr/index";
 
 const { formTextColor, letterSpacing, badInputColor, goodInputColor } = theme;
 

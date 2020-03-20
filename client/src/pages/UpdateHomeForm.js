@@ -2,57 +2,20 @@ import React, { Component } from "react";
 import axios from "axios";
 import styled from "styled-components";
 import HomeInfo from "../components/HomeInfo";
+import { AddressForm } from "../components/AddressForm";
+import { Container } from "../styles";
 
 const StyledUpdateHomeForm = styled.div`
-  margin-top: 2rem;
+  max-width: ${props => props.theme.formWidth};
+  margin: 2rem auto 0;
   padding: 0 2rem;
   h3 {
     text-align: center;
-    margin-top: 2rem;
+    margin: 2rem 0 1rem;
   }
-  .update-home {
-    max-width: 35rem;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 0.5rem;
-    margin: 1rem auto 0;
-  }
-`;
-
-const StyledForm = styled.form`
-  max-width: 35rem;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-gap: 0.5rem;
-  margin: 1rem auto 0;
-
-  input {
-    border-radius: 0.25rem;
-  }
-
-  input[type="reset"],
-  input[type="submit"] {
-    border: none;
-    cursor: pointer;
-    padding: 1rem 2rem;
-    margin: 0.5rem;
-    max-width: 40%;
-  }
-
-  input[type="reset"] {
-    background-color: #eee;
-    color: ${props => props.theme.brand};
-  }
-  input[type="submit"] {
-    background-color: ${props => props.theme.brand};
-    color: white;
-  }
-
-  @media only screen and (max-width: 600px) {
-    input[type="reset"],
-    input[type="submit"] {
-      max-width: 70%;
-    }
+  .border-top-bottom {
+    border-top: 1px solid ${props => props.theme.formBorderColor};
+    border-bottom: 1px solid ${props => props.theme.formBorderColor};
   }
 `;
 
@@ -67,7 +30,15 @@ export default class UpdateHomeForm extends Component {
     city: "",
     state: "",
     zip: "",
-    code: ""
+    code: "",
+    BACKEND_API_URI_GET:
+      process.env.NODE_ENV !== "production"
+        ? `http://localhost:5000/api/homes/${this.props.match.params.id}`
+        : `https://protected-oasis-33800.herokuapp.com/api/homes/${this.props.match.params.id}`,
+    BACKEND_API_URI_EDIT:
+      process.env.NODE_ENV !== "production"
+        ? `http://localhost:5000/api/homes/${this.props.match.params.id}/edit`
+        : `https://protected-oasis-33800.herokuapp.com/api/homes/${this.props.match.params.id}/edit`
   };
 
   clearHome = () => {
@@ -88,12 +59,8 @@ export default class UpdateHomeForm extends Component {
 
   // Get a single home using the id from the params
   getHome = () => {
-    const BACKEND_API_URL =
-      process.env.NODE_ENV !== "production"
-        ? `http://localhost:5000/api/homes/${this.props.match.params.id}`
-        : `https://protected-oasis-33800.herokuapp.com/api/homes/${this.props.match.params.id}`;
     axios
-      .get(`${BACKEND_API_URL}`)
+      .get(`${this.state.BACKEND_API_URI_GET}`)
       .then(req => {
         return this.setState({
           currentAddress: req.data.data.address,
@@ -107,15 +74,11 @@ export default class UpdateHomeForm extends Component {
   };
 
   handleSubmit = e => {
-    const BACKEND_API_URL =
-      process.env.NODE_ENV !== "production"
-        ? `http://localhost:5000/api/homes/${this.props.match.params.id}`
-        : `https://protected-oasis-33800.herokuapp.com/api/homes/${this.props.match.params.id}`;
     const { address, city, state, zip, code } = this.state;
     e.preventDefault();
 
     axios
-      .patch(`${BACKEND_API_URL}`, {
+      .patch(`${this.state.BACKEND_API_URI_EDIT}`, {
         address,
         city,
         state,
@@ -137,66 +100,30 @@ export default class UpdateHomeForm extends Component {
   }
 
   render() {
+    const {
+      currentAddress,
+      currentCity,
+      currentState,
+      currentZip,
+      currentCode,
+      BACKEND_API_URI_EDIT
+    } = this.state;
     return (
       <StyledUpdateHomeForm>
-        <h2>Update Home</h2>
-        <h3>Current Address</h3>
-        <div className="update-home">
-          <label>Address: </label>
-          <p>{this.state.currentAddress}</p>
-          <label>City: </label>
-          <p>{this.state.currentCity}</p>
-          <label>Zip Code: </label>
-          <p>{this.state.currentZip}</p>
-          <label>Gate Code: </label>
-          <p>{this.state.currentCode}</p>
-        </div>
+        <Container>
+          <h2>Update Home</h2>
+          <h3>Current Address</h3>
+          <HomeInfo
+            className="border-top-bottom"
+            address={currentAddress}
+            city={currentCity}
+            state={currentState}
+            zip={currentZip}
+            code={currentCode}
+          />
+        </Container>
         <h3>Update Address</h3>
-        <StyledForm method="POST" onSubmit={this.handleSubmit}>
-          <label>Address: </label>
-          <input
-            type="text"
-            name="address"
-            placeholder="address"
-            value={this.state.address}
-            onChange={this.handleInputChange}
-            required
-          />
-          <label>City: </label>
-          <input
-            type="text"
-            name="city"
-            placeholder="city"
-            value={this.state.city}
-            onChange={this.handleInputChange}
-            required
-          />
-          <label>Zip code: </label>
-          <input
-            type="text"
-            name="zip"
-            placeholder="zip code"
-            value={this.state.zip}
-            onChange={this.handleInputChange}
-            required
-          />
-          <label>Gate code: </label>
-          <input
-            type="text"
-            name="code"
-            placeholder="gate code"
-            value={this.state.code}
-            onChange={this.handleInputChange}
-            required
-          />
-          <input type="submit" value="Submit" />
-          <input
-            type="reset"
-            name="clearHome"
-            value="Clear"
-            onClick={this.clearHome}
-          />
-        </StyledForm>
+        <AddressForm httpreq="patch" uri={BACKEND_API_URI_EDIT} />
       </StyledUpdateHomeForm>
     );
   }

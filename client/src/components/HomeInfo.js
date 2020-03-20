@@ -15,6 +15,7 @@ const HomeResult = styled.div`
   margin-bottom: 1rem;
   padding: 0.5rem;
   border-bottom: 1px solid ${formBorderColor};
+
   .map-marker {
     flex-basis: 8%;
     margin-right: 0.5rem;
@@ -55,7 +56,7 @@ const HomeResult = styled.div`
 `;
 
 const HomeInfo = ({
-  _id,
+  id,
   address,
   city,
   state,
@@ -65,7 +66,7 @@ const HomeInfo = ({
   ...props
 }) => {
   return (
-    <HomeResult key={`${_id}`} className="query-result" {...props}>
+    <HomeResult className="query-result" {...props}>
       <MapMarker className="map-marker" />
       <div className="location">
         <div className="address">
