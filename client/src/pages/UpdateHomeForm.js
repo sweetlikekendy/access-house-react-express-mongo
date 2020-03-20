@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import styled from "styled-components";
+import HomeInfo from "../components/HomeInfo";
 
 const StyledUpdateHomeForm = styled.div`
   margin-top: 2rem;
@@ -59,10 +60,12 @@ export default class UpdateHomeForm extends Component {
   state = {
     currentAddress: "",
     currentCity: "",
+    currentState: "",
     currentZip: "",
     currentCode: "",
     address: "",
     city: "",
+    state: "",
     zip: "",
     code: ""
   };
@@ -71,6 +74,7 @@ export default class UpdateHomeForm extends Component {
     this.setState({
       address: "",
       city: "",
+      state: "",
       zip: "",
       code: ""
     });
@@ -94,6 +98,7 @@ export default class UpdateHomeForm extends Component {
         return this.setState({
           currentAddress: req.data.data.address,
           currentCity: req.data.data.city,
+          currentState: req.data.data.state,
           currentZip: req.data.data.zip,
           currentCode: req.data.data.code
         });
@@ -106,13 +111,14 @@ export default class UpdateHomeForm extends Component {
       process.env.NODE_ENV !== "production"
         ? `http://localhost:5000/api/homes/${this.props.match.params.id}`
         : `https://protected-oasis-33800.herokuapp.com/api/homes/${this.props.match.params.id}`;
-    const { address, city, zip, code } = this.state;
+    const { address, city, state, zip, code } = this.state;
     e.preventDefault();
 
     axios
       .patch(`${BACKEND_API_URL}`, {
         address,
         city,
+        state,
         zip,
         code
       })

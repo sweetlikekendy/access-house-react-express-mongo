@@ -1,14 +1,11 @@
 import { createGlobalStyle } from "styled-components";
-import { theme } from "./index";
-
-const { bg, fontColor, hrefColor, inputActiveColor } = theme;
 
 const GlobalStyle = createGlobalStyle`
   html {
     box-sizing: border-box;
     font-size: calc(16px + (18 - 14) * ((100vw - 300px) / (1600 - 300)));
-    background-color: rgba(${bg});
-    color: ${fontColor};
+    background-color: rgba(${props => props.theme.bg});
+    color: ${props => props.theme.fontColor};
   }
   *, *:before, *:after {
     box-sizing: inherit;
@@ -32,7 +29,7 @@ const GlobalStyle = createGlobalStyle`
   }
   a {
     text-decoration: none;
-    color: ${hrefColor};
+    color: ${props => props.theme.hrefColor};
     font-weight: 700;
   }
   h1, h2 {
@@ -46,8 +43,42 @@ const GlobalStyle = createGlobalStyle`
 
   input:focus,
   select:focus {
-    border-bottom: 2px solid ${inputActiveColor};
+    border-bottom: 2px solid ${props => props.theme.inputActiveColor};
   }
+
+  .no-border {
+    border: none !important;
+  }
+  .call-to-action-button {
+    width: 150px;
+    border: none;
+    cursor: pointer;
+    padding: 1rem 1.5rem;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    background-color: ${props => props.theme.buttonCallToActionBgColor};
+    color: white;
+
+    &:focus {
+      border-bottom: none;
+    }
+  }
+  .button {
+    width: 150px;
+    border: none;
+    cursor: pointer;
+    padding: 1rem 1.5rem;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    background-color: ${props => props.theme.buttonBgColor};
+
+    &:focus {
+      border-bottom: none;
+    }
+  }
+
 `;
 
 export default GlobalStyle;

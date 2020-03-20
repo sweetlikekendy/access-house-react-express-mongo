@@ -2,42 +2,44 @@ import React, { Component } from "react";
 import { BrowserRouter as Route, Link } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
+import HomeInfo from "../components/HomeInfo";
+import { RightAlignButton } from "../styles";
 
 const StyledHome = styled.div`
-  max-width: ${props => props.theme.pageWidth};
+  max-width: ${props => props.theme.formWidth};
   margin: 2rem auto;
-  padding: 0 2rem;
-  input[type="button"] {
-    max-width: 40%;
-    border-radius: 0.25rem;
-    background-color: #eee;
-    border: none;
-    color: ${props => props.theme.brand};
-    padding: 1rem 2rem;
-    margin: 0.5rem;
-    cursor: pointer;
-  }
-  input[name="deleteHome"] {
-    background-color: rgba(255, 0, 0, 0.7);
-    color: white;
-  }
-  .single-home {
-    max-width: 35rem;
-    display: grid;
-    grid-template-columns: auto auto;
-    grid-gap: 0.5rem;
-    margin: 2.5rem auto 0;
+  padding: 1rem;
 
-    a {
-      input {
+  .single-home {
+    margin: 1rem auto 0;
+
+    .border-top-bottom {
+      border-top: 1px solid ${props => props.theme.formBorderColor};
+      border-bottom: 1px solid ${props => props.theme.formBorderColor};
+    }
+
+    .button-group {
+      flex-direction: column-reverse;
+      .call-to-action-button {
+        margin-bottom: 1rem;
+        width: 100%;
+      }
+      .button {
         width: 100%;
       }
     }
-  }
-
-  @media only screen and (max-width: 540px) {
-    input[type="button"] {
-      max-width: 70%;
+    @media screen and (min-width: 768px) {
+      .button-group {
+        flex-direction: row;
+        .call-to-action-button {
+          margin-bottom: 0;
+          width: 150px;
+        }
+        .button {
+          width: 150px;
+          margin-right: 1rem;
+        }
+      }
     }
   }
 `;
@@ -92,30 +94,36 @@ export default class Home extends Component {
     const { address, city, state, zip, code } = this.state;
     return (
       <StyledHome>
-        <h2>Home with the following information: </h2>
+        <h2>Address to Edit</h2>
         <div className="single-home">
-          <label>Address:</label>
-          {address ? <p>{address}</p> : <p>N/A</p>}
-          <label>City:</label>
-          {city ? <p>{city}</p> : <p>N/A</p>}
-          <label>State:</label>
-          {state ? <p>{state}</p> : <p>N/A</p>}
-          <label>Zip Code:</label>
-          {zip ? <p>{zip}</p> : <p>N/A</p>}
-          <label>Gate Code:</label>
-          {code ? <p>{code}</p> : <p>N/A</p>}
-          <Link
-            className="edit"
-            to={`/homes/${this.props.match.params.id}/edit`}
-          >
-            <input type="button" name="editHome" value="Edit" />
-          </Link>
-          <input
-            type="button"
-            name="deleteHome"
-            value="Delete"
-            onClick={this.deleteHome}
+          <HomeInfo
+            className="border-top-bottom"
+            address={address}
+            city={city}
+            state={state}
+            zip={zip}
+            code={code}
           />
+          <RightAlignButton className="button-group">
+            <input
+              className="button"
+              type="button"
+              name="deleteHome"
+              value="Delete"
+              onClick={this.deleteHome}
+            />
+            <Link
+              className="edit"
+              to={`/homes/${this.props.match.params.id}/edit`}
+            >
+              <input
+                className="call-to-action-button"
+                type="button"
+                name="editHome"
+                value="Edit"
+              />
+            </Link>
+          </RightAlignButton>
         </div>
       </StyledHome>
     );

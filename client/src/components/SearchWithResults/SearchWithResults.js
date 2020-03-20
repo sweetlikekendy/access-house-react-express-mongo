@@ -3,14 +3,11 @@ import Axios from "axios";
 import styled from "styled-components";
 import * as JsSearch from "js-search";
 import Searchbar from "./Searchbar";
-import { MapMarker, Unlock } from "../../assets/svgr";
-import { theme } from "../../styles";
 import { HomeOptionMenu } from "../HomeOptionMenu";
-
-const { fontColor, formBorderColor } = theme;
+import HomeInfo from "../HomeInfo";
 
 const StyledFilterableHomeTable = styled.div`
-  max-width: 800px;
+  max-width: ${props => props.theme.formWidth};
   margin: 2rem auto;
   padding: 0 2rem;
 
@@ -20,57 +17,6 @@ const StyledFilterableHomeTable = styled.div`
   #search-result-text {
     margin: 0.5rem;
     font-size: 16px;
-  }
-`;
-
-const ResultsQuery = styled.div`
-  .query-result {
-    position: relative;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 1rem;
-    padding: 0.5rem;
-    border-bottom: 1px solid ${formBorderColor};
-    .map-marker {
-      flex-basis: 8%;
-      margin-right: 0.5rem;
-    }
-    .location {
-      flex-basis: 210px;
-      color: ${fontColor};
-      font-size: 14px;
-      display: flex;
-      flex-wrap: wrap;
-      .address,
-      .gate-code {
-        flex-basis: 100%;
-      }
-      .gate-code {
-        color: ${fontColor};
-        display: flex;
-        align-items: center;
-        #key-icon {
-          margin-right: 0.5rem;
-        }
-      }
-    }
-  }
-  @media screen and (min-width: 768px) {
-    .query-result {
-      .location {
-        flex-basis: 375px;
-        font-size: 16px;
-
-        .address {
-          flex-basis: 70%;
-        }
-        .gate-code {
-          flex-basis: 20%;
-        }
-      }
-    }
   }
 `;
 
@@ -205,32 +151,44 @@ class SearchWithResults extends Component {
             ? `${queryResults.length} items to search from`
             : `${queryResults.length} items found from search query`}
         </p>
-        <ResultsQuery>
+        <div>
           {queryResults.map(item => {
             const { _id, address, city, state, zip, code } = item;
             return (
-              <div key={`${_id}`} className="query-result">
-                <MapMarker className="map-marker" />
-                <div className="location">
-                  <div className="address">
-                    <p>{address}</p>
-                    <p>
-                      {city}, {state} {zip}
-                    </p>
-                  </div>
-                  <div className="gate-code">
-                    <Unlock id="key-icon" />
-                    <p>{code}</p>
-                  </div>
-                </div>
+              <HomeInfo
+                _id={_id}
+                address={address}
+                city={city}
+                state={state}
+                zip={zip}
+                code={code}
+              >
                 <HomeOptionMenu className="three-dot-menu" id={_id} />
-              </div>
+              </HomeInfo>
             );
           })}
-        </ResultsQuery>
+        </div>
       </StyledFilterableHomeTable>
     );
   }
 }
 
 export default SearchWithResults;
+{
+  /* <div key={`${_id}`} className="query-result">
+  <MapMarker className="map-marker" />
+  <div className="location">
+    <div className="address">
+      <p>{address}</p>
+      <p>
+        {city}, {state} {zip}
+      </p>
+    </div>
+    <div className="gate-code">
+      <Unlock id="key-icon" />
+      <p>{code}</p>
+    </div>
+  </div>
+  <HomeOptionMenu className="three-dot-menu" id={_id} />
+</div> */
+}

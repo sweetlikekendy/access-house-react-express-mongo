@@ -44,7 +44,7 @@ const DotsContainer = styled.div`
   }
 `;
 
-const HomeOptionMenu = ({ id, props }) => {
+const HomeOptionMenu = ({ id, ...props }) => {
   const [open, setOpen] = useState(false);
   const node = useRef();
   const handleClick = () => {
@@ -85,7 +85,7 @@ const HomeOptionMenu = ({ id, props }) => {
         <DropdownMenu>
           <MenuList>
             <li>
-              <Link to={`homes/${id}`}>Edit</Link>
+              <Link to={`/homes/${id}/edit`}>Edit</Link>
             </li>
             <li>Delete</li>
           </MenuList>

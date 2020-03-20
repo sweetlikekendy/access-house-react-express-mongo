@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import styled from "styled-components";
 import InputContainer from "../components/InputContainer";
+import { RightAlignButton } from "../styles";
 
 const FieldSet = styled.fieldset`
   border: none;
@@ -22,15 +23,6 @@ const StyledForm = styled.form`
   margin: 2.5rem auto 0;
 
   input[type="submit"] {
-    width: 200px;
-    border: none;
-    cursor: pointer;
-    padding: 1rem 1.5rem;
-    font-size: 16px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    background-color: ${props => props.theme.brand};
-    color: white;
     grid-area: button;
   }
 
@@ -52,12 +44,6 @@ const StyledForm = styled.form`
 
   @media only screen and (max-width: 600px) {
     grid-template-columns: 1fr;
-
-    input[type="submit"] {
-      width: 100%;
-      margin: 0;
-    }
-
     grid-template-areas:
       "address"
       "city"
@@ -65,19 +51,18 @@ const StyledForm = styled.form`
       "zip"
       "code"
       "button";
+
+    input[type="submit"] {
+      width: 100%;
+      margin: 0;
+    }
   }
 `;
 
 const StyledAddHomeForm = styled.div`
-  max-width: ${props => props.theme.pageWidth};
+  max-width: ${props => props.theme.formWidth};
   margin: 2rem auto;
   padding: 0 2rem;
-`;
-
-const ButtonContainer = styled.div`
-  grid-area: button;
-  display: flex;
-  justify-content: flex-end;
 `;
 
 export default class AddHomeForm extends Component {
@@ -333,9 +318,13 @@ export default class AddHomeForm extends Component {
               dataParseError="Invalid value"
               handleInputChange={this.handleInputChange}
             />
-            <ButtonContainer>
-              <input type="submit" value="SUBMIT" />
-            </ButtonContainer>
+            <RightAlignButton>
+              <input
+                className="call-to-action-button"
+                type="submit"
+                value="SUBMIT"
+              />
+            </RightAlignButton>
           </StyledForm>
         </FieldSet>
       </StyledAddHomeForm>
