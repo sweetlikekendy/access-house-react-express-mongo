@@ -33,12 +33,12 @@ class SearchWithResults extends Component {
    * React lifecycle method to fetch the data
    */
   async componentDidMount() {
-    const BACKEND_API_URL =
+    const BACKEND_API_URI =
       process.env.NODE_ENV !== "production"
         ? "http://localhost:5000/api/homes"
         : "https://protected-oasis-33800.herokuapp.com/api/homes";
 
-    Axios.get(`${BACKEND_API_URL}`)
+    Axios.get(`${BACKEND_API_URI}`)
       .then(result => {
         const homeData = result.data.data;
         this.setState({ homeList: homeData });

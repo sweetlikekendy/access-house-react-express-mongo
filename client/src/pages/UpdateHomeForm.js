@@ -123,7 +123,9 @@ export default class UpdateHomeForm extends Component {
           />
         </Container>
         <h3>Update Address</h3>
-        <AddressForm httpreq="patch" uri={BACKEND_API_URI_EDIT} />
+        <Container>
+          <AddressForm httpreq="patch" uri={BACKEND_API_URI_EDIT} />
+        </Container>
       </StyledUpdateHomeForm>
     );
   }

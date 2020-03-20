@@ -233,6 +233,7 @@ export default class AddressForm extends Component {
           code
         })
         .then(res => {
+          console.log(res);
           if (res.data.redirect === "/homes") {
             window.location = "/homes";
           }

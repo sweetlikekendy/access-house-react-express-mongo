@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { BrowserRouter as Route, Link } from "react-router-dom";
+import axios from "axios";
 import styled from "styled-components";
 import { ThreeDotMenu } from "../../assets/svgr";
 import { theme } from "../../styles";
@@ -29,8 +30,18 @@ const MenuList = styled.ul`
   font-size: 16px;
   background-color: ${dropdownMenuBgColor};
   li {
-    padding: 0.5rem;
     color: ${fontColor};
+    padding: 0.5rem;
+  }
+  .delete-button {
+    color: ${fontColor};
+    background-color: ${dropdownMenuBgColor};
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 700;
+    padding: 0;
+    outline: none;
   }
 `;
 
@@ -76,6 +87,23 @@ const HomeOptionMenu = ({ id, ...props }) => {
     };
   }, [open]);
 
+  const BACKEND_API_URI =
+    process.env.NODE_ENV !== "production"
+      ? `http://localhost:5000/api/homes/${id}`
+      : `https://protected-oasis-33800.herokuapp.com/api/homes/${id}`;
+
+  const deleteHome = () => {
+    axios
+      .delete(`${BACKEND_API_URI}`)
+      .then(res => {
+        console.log(res);
+        if (res.data.redirect === "/homes") {
+          window.location = "/homes";
+        }
+      })
+      .catch(err => console.log(err));
+  };
+
   return (
     <Container ref={node} {...props}>
       <DotsContainer onClick={handleClick} openState={open}>
@@ -84,10 +112,16 @@ const HomeOptionMenu = ({ id, ...props }) => {
       {open && (
         <DropdownMenu>
           <MenuList>
-            <li>
-              <Link to={`/homes/${id}/edit`}>Edit</Link>
-            </li>
-            <li>Delete</li>
+            <Link to={`/homes/${id}/edit`}>
+              <li>Edit</li>
+            </Link>
+            <button
+              className="delete-button"
+              type="button"
+              onClick={deleteHome}
+            >
+              <li>Delete</li>
+            </button>
           </MenuList>
         </DropdownMenu>
       )}
