@@ -73,28 +73,6 @@ export default class UpdateHomeForm extends Component {
       .catch(err => console.log(err));
   };
 
-  handleSubmit = e => {
-    const { address, city, state, zip, code } = this.state;
-    e.preventDefault();
-
-    axios
-      .patch(`${this.state.BACKEND_API_URI_EDIT}`, {
-        address,
-        city,
-        state,
-        zip,
-        code
-      })
-      .then(res => {
-        if (res.data.redirect === "/homes") {
-          window.location = "/homes";
-        }
-      })
-      .catch(err => console.log(err));
-
-    this.clearHome();
-  };
-
   componentDidMount() {
     this.getHome();
   }

@@ -98,6 +98,7 @@ const HomeOptionMenu = ({ id, ...props }) => {
       .then(res => {
         if (res.status === 204) {
           window.location = "/homes";
+          return false;
         }
       })
       .catch(err => console.log(err));
