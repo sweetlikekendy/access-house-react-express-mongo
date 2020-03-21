@@ -233,8 +233,7 @@ export default class AddressForm extends Component {
           code
         })
         .then(res => {
-          console.log(res);
-          if (res.data.redirect === "/homes") {
+          if (res.status === 201) {
             window.location = "/homes";
           }
         })
@@ -250,7 +249,7 @@ export default class AddressForm extends Component {
           code
         })
         .then(res => {
-          if (res.data.redirect === "/homes") {
+          if (res.status === 200) {
             window.location = "/homes";
           }
         })

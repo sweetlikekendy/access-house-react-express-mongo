@@ -96,8 +96,7 @@ const HomeOptionMenu = ({ id, ...props }) => {
     axios
       .delete(`${BACKEND_API_URI}`)
       .then(res => {
-        console.log(res);
-        if (res.data.redirect === "/homes") {
+        if (res.status === 204) {
           window.location = "/homes";
         }
       })
