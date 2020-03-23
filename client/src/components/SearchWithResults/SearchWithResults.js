@@ -174,21 +174,3 @@ class SearchWithResults extends Component {
 }
 
 export default SearchWithResults;
-{
-  /* <div key={`${_id}`} className="query-result">
-  <MapMarker className="map-marker" />
-  <div className="location">
-    <div className="address">
-      <p>{address}</p>
-      <p>
-        {city}, {state} {zip}
-      </p>
-    </div>
-    <div className="gate-code">
-      <Unlock id="key-icon" />
-      <p>{code}</p>
-    </div>
-  </div>
-  <HomeOptionMenu className="three-dot-menu" id={_id} />
-</div> */
-}
