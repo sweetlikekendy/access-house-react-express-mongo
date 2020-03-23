@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import styled from "styled-components";
 import InputContainer from "./InputContainer";
-import { RightAlignButton, Container } from "../../styles";
+import { RightAlignButton } from "../../styles";
 
 const FieldSet = styled.fieldset`
   border: none;

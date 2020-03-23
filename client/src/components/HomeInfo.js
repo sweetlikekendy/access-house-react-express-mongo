@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import styled from "styled-components";
 import { theme } from "../styles";
 import { MapMarker, Unlock } from "../assets/svgr";
@@ -84,7 +83,4 @@ const HomeInfo = ({
     </HomeResult>
   );
 };
-
-HomeInfo.propTypes = {};
-
 export default HomeInfo;
