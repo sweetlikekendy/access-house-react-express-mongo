@@ -234,9 +234,12 @@ export default class AddressForm extends Component {
           code
         })
         .then(res => {
-          if (res.status === 201) {
+          // if (res.status === 201) {
+          //   window.location = "/homes";
+          //   return false;
+          // }
+          if (res.data.redirect === "/homes") {
             window.location = "/homes";
-            return false;
           }
         })
         .catch(err => console.log(err));
@@ -251,9 +254,12 @@ export default class AddressForm extends Component {
           code
         })
         .then(res => {
-          if (res.status === 200) {
+          // if (res.status === 200) {
+          //   window.location = "/homes";
+          //   return false;
+          // }
+          if (res.data.redirect === "/homes") {
             window.location = "/homes";
-            return false;
           }
         })
         .catch(err => console.log(err));
