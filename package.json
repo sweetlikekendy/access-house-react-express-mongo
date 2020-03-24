@@ -6,7 +6,6 @@
   "license": "MIT",
   "homepage": "https://github.com/sweetlikekendy/access-house-react-express-mongo#readme",
   "scripts": {
-    "build": "babel server -d dist",
     "start": "node server/index.js",
     "server": "nodemon server/index.js",
     "client": "npm start --prefix client",
