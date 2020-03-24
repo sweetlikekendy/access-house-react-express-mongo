@@ -91,7 +91,10 @@ const removeOne = model => async (req, res) => {
       res.status(400).end();
     }
 
-    res.status(204).json(redir);
+    res.json(redir);
+    //Set HTTP method to GET
+    // req.method = "GET";
+    // res.redirect(302, "/homes");
   } catch (e) {
     console.error(e);
     res.status(400).end();

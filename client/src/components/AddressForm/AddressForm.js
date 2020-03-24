@@ -179,7 +179,7 @@ export default class AddressForm extends Component {
 
   delegate = selector => cb => e => e.target.matches(selector) && cb(e);
 
-  async componentDidMount() {
+  componentDidMount() {
     const inputTextDelegate = this.delegate("input[type=text]");
     const inputTelDelegate = this.delegate("input[type=tel]");
     const inputSelectDelegate = this.delegate("select");
@@ -211,6 +211,43 @@ export default class AddressForm extends Component {
     );
 
     window.addEventListener(
+      "focusout",
+      inputSelectDelegate(el => this.inputFieldFocusOut(el))
+    );
+  }
+
+  componentWillUnmount() {
+    const inputTextDelegate = this.delegate("input[type=text]");
+    const inputTelDelegate = this.delegate("input[type=tel]");
+    const inputSelectDelegate = this.delegate("select");
+
+    // Text event listeners
+    window.removeEventListener(
+      "focusin",
+      inputTextDelegate(el => this.inputFieldFocusIn(el))
+    );
+
+    window.removeEventListener(
+      "focusout",
+      inputTextDelegate(el => this.inputFieldFocusOut(el))
+    );
+    // Tel event listeners
+    window.removeEventListener(
+      "focusin",
+      inputTelDelegate(el => this.inputFieldFocusIn(el))
+    );
+
+    window.removeEventListener(
+      "focusout",
+      inputTelDelegate(el => this.inputFieldFocusOut(el))
+    );
+    // Select event listeners
+    window.removeEventListener(
+      "focusin",
+      inputSelectDelegate(el => this.inputFieldFocusIn(el))
+    );
+
+    window.removeEventListener(
       "focusout",
       inputSelectDelegate(el => this.inputFieldFocusOut(el))
     );

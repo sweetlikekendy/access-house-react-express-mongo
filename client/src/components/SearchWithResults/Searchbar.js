@@ -13,14 +13,6 @@ const Form = styled.form`
 `;
 
 export default class Searchbar extends Component {
-  handleFilterTextChange = e => {
-    this.props.onFilterTextChange(e.target.value);
-  };
-
-  handleFilterTextChange = e => {
-    this.props.onFilterTextChange(e.target.value);
-  };
-
   render() {
     const { value, searchData } = this.props;
 

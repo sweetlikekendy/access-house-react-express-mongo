@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 // Connect to the db
 module.exports = connect = url => {
   if (process.env.NODE_ENV === "production") {
+    console.log(process.env.DB_URL);
     return mongoose
       .connect(
         process.env.DB_URL,
@@ -18,6 +19,7 @@ module.exports = connect = url => {
       .then(() => console.log("MongoDB connected ... "))
       .catch(err => console.log(err));
   } else {
+    console.log(process.env.DB_URL_DEV);
     return mongoose
       .connect(process.env.DB_URL_DEV, {
         useUnifiedTopology: true,

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Axios from "axios";
+import axios from "axios";
 import styled from "styled-components";
 import * as JsSearch from "js-search";
 import Searchbar from "./Searchbar";
@@ -32,16 +32,31 @@ class SearchWithResults extends Component {
   /**
    * React lifecycle method to fetch the data
    */
-  async componentDidMount() {
+  CancelToken = axios.CancelToken;
+  source = this.CancelToken.source();
+
+  abortController = new AbortController();
+  fetchData = async () => {
     const BACKEND_API_URI =
       process.env.NODE_ENV !== "production"
         ? "http://localhost:5000/api/homes"
         : "https://protected-oasis-33800.herokuapp.com/api/homes";
-
-    Axios.get(`${BACKEND_API_URI}`)
-      .then(result => {
-        const homeData = result.data.data;
-        this.setState({ homeList: homeData });
+    try {
+      let result = await axios.get(`${BACKEND_API_URI}`, {
+        cancelToken: this.source.token
+      });
+      return result.data.data;
+    } catch (error) {
+      if (axios.isCancel(error)) {
+        console.log("Request canceled", error.message);
+        throw new Error("Cancelled");
+      }
+    }
+  };
+  async componentDidMount() {
+    this.fetchData()
+      .then(data => {
+        this.setState({ homeList: data });
         this.rebuildIndex();
       })
       .catch(err => {
@@ -51,7 +66,9 @@ class SearchWithResults extends Component {
         console.log(`====================================`);
       });
   }
-
+  async componentWillUnmount() {
+    this.source.cancel("Operation canceled by the user.");
+  }
   /**
    * rebuilds the overall index based on the options
    */
