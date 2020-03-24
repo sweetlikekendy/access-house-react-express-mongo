@@ -2,7 +2,7 @@ require("dotenv").config();
 const mongoose = require("mongoose");
 
 // Connect to the db
-module.exports = connect = () => {
+module.exports = connect = url => {
   if (process.env.NODE_ENV === "production") {
     return mongoose
       .connect(
