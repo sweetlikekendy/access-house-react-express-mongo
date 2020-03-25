@@ -1,9 +1,10 @@
-import React, { Component } from "react";
+import React, { Component, Timeout } from "react";
 import axios from "axios";
 import styled from "styled-components";
 import * as JsSearch from "js-search";
 import Searchbar from "./Searchbar";
 import { HomeOptionMenu } from "../HomeOptionMenu";
+import { Loader } from "../../assets/svgr";
 import HomeInfo from "../HomeInfo";
 
 const StyledFilterableHomeTable = styled.div`
@@ -19,6 +20,22 @@ const StyledFilterableHomeTable = styled.div`
     font-size: 16px;
   }
 `;
+
+const CenterDiv = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Placeholder = ({ delayMs, fallback, children }) => {
+  return (
+    <Timeout ms={delayMs}>
+      {didTimeout => {
+        return didTimeout ? fallback : children;
+      }}
+    </Timeout>
+  );
+};
 
 class SearchWithResults extends Component {
   state = {
@@ -133,8 +150,11 @@ class SearchWithResults extends Component {
       return (
         <div style={{ margin: `1.2rem 1rem 1.2rem 1rem` }}>
           <h1 style={{ marginTop: `3em`, textAlign: `center` }}>
-            Getting the search all setup
+            Fetching all the data
           </h1>
+          <CenterDiv>
+            <Loader />
+          </CenterDiv>
         </div>
       );
     }
@@ -168,6 +188,7 @@ class SearchWithResults extends Component {
             ? `${queryResults.length} items to search from`
             : `${queryResults.length} items found from search query`}
         </p>
+
         <div>
           {queryResults.map(item => {
             const { _id, address, city, state, zip, code } = item;

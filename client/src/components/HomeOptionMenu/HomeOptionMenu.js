@@ -34,6 +34,10 @@ const MenuList = styled.ul`
     color: ${fontColor};
     padding: 0.5rem;
   }
+  li:hover,
+  .delete-button:hover {
+    opacity: 0.7;
+  }
   .delete-button {
     color: ${fontColor};
     background-color: ${dropdownMenuBgColor};
@@ -52,6 +56,13 @@ const DotsContainer = styled.div`
   svg {
     circle {
       fill: ${({ openState }) => openState && `${fontColor}`};
+    }
+  }
+  &:hover {
+    svg {
+      circle {
+        fill: ${fontColor};
+      }
     }
   }
 `;
@@ -100,7 +111,7 @@ const HomeOptionMenu = ({ id, ...props }) => {
         // if (res.status === 204) {
         //   window.location = "/homes";
         //   return false;
-        // }
+
         if (res.data.redirect === "/homes") {
           window.location = "/homes";
         }

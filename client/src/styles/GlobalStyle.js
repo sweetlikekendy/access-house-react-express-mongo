@@ -78,7 +78,9 @@ const GlobalStyle = createGlobalStyle`
       border-bottom: none;
     }
   }
-
+  .button:hover, .call-to-action-button:hover {
+    opacity: 0.7;
+  }
 `;
 
 export default GlobalStyle;
