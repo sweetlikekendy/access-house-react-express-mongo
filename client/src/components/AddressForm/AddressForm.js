@@ -62,6 +62,7 @@ const StyledForm = styled.form`
 `;
 
 export default class AddressForm extends Component {
+  _isMounted = false;
   state = {
     address: "",
     city: "",
@@ -89,68 +90,74 @@ export default class AddressForm extends Component {
 
   // Method to set corresponding load state
   setLoadState = name => {
-    this.setState(prevState => {
-      switch (name) {
-        case "address":
-          return {
-            addressLoad: prevState.addressLoad + 1
-          };
-        case "city":
-          return {
-            cityLoad: prevState.cityLoad + 1
-          };
-        case "state":
-          return {
-            stateLoad: prevState.stateLoad + 1
-          };
-        case "zip":
-          return {
-            zipLoad: prevState.zipLoad + 1
-          };
-        case "code":
-          return {
-            codeLoad: prevState.codeLoad + 1
-          };
-        default:
-          console.log(`Nothing with that load`);
-          break;
-      }
-    });
+    if (this._isMounted) {
+      this.setState(prevState => {
+        switch (name) {
+          case "address":
+            return {
+              addressLoad: prevState.addressLoad + 1
+            };
+          case "city":
+            return {
+              cityLoad: prevState.cityLoad + 1
+            };
+          case "state":
+            return {
+              stateLoad: prevState.stateLoad + 1
+            };
+          case "zip":
+            return {
+              zipLoad: prevState.zipLoad + 1
+            };
+          case "code":
+            return {
+              codeLoad: prevState.codeLoad + 1
+            };
+          default:
+            console.log(`Nothing with that load`);
+            break;
+        }
+      });
+    }
   };
 
   handleInputChange = ({ target: { name, value } }) => {
-    this.setState({
-      [name]: value,
-      [`${name}Active`]: true,
-      [`${name}Empty`]: false
-    });
+    if (this._isMounted) {
+      this.setState({
+        [name]: value,
+        [`${name}Active`]: true,
+        [`${name}Empty`]: false
+      });
 
-    this.setLoadState(name);
+      this.setLoadState(name);
+    }
   };
 
   clearHome = () => {
-    this.setState({
-      address: "",
-      city: "",
-      state: "",
-      zip: "",
-      code: "",
-      addressActive: false,
-      cityActive: false,
-      stateActive: false,
-      zipActive: false,
-      codeActive: false,
-      addressEmpty: false,
-      cityEmpty: false,
-      stateEmpty: false,
-      zipEmpty: false,
-      codeEmpty: false,
-      addressLoad: 0,
-      cityLoad: 0,
-      stateLoad: 0,
-      zipLoad: 0,
-      codeLoad: 0
-    });
+    if (this._isMounted) {
+      this.setState({
+        address: "",
+        city: "",
+        state: "",
+        zip: "",
+        code: "",
+        addressActive: false,
+        cityActive: false,
+        stateActive: false,
+        zipActive: false,
+        codeActive: false,
+        addressEmpty: false,
+        cityEmpty: false,
+        stateEmpty: false,
+        zipEmpty: false,
+        codeEmpty: false,
+        addressLoad: 0,
+        cityLoad: 0,
+        stateLoad: 0,
+        zipLoad: 0,
+        codeLoad: 0
+      });
+    }
   };
 
   inputFieldFocusIn = e => {
@@ -159,19 +166,23 @@ export default class AddressForm extends Component {
 
     // 2. if the input field clicked on, set active to true
     if (e.target === document.activeElement) {
-      this.setState({
-        [`${name}Active`]: true
-      });
+      if (this._isMounted) {
+        this.setState({
+          [`${name}Active`]: true
+        });
+      }
     }
   };
 
   inputFieldFocusOut = ({ target: { name, value } }) => {
     // if input field is empty, set active to false, and empty to true
     if (!value) {
-      this.setState({
-        [`${name}Active`]: false,
-        [`${name}Empty`]: true
-      });
+      if (this._isMounted) {
+        this.setState({
+          [`${name}Active`]: false,
+          [`${name}Empty`]: true
+        });
+      }
     }
 
     this.setLoadState(name);
@@ -179,78 +190,46 @@ export default class AddressForm extends Component {
 
   delegate = selector => cb => e => e.target.matches(selector) && cb(e);
 
-  componentDidMount() {
-    const inputTextDelegate = this.delegate("input[type=text]");
-    const inputTelDelegate = this.delegate("input[type=tel]");
-    const inputSelectDelegate = this.delegate("select");
+  inputTextDelegate = this.delegate("input[type=text]");
+  inputTelDelegate = this.delegate("input[type=tel]");
+  inputSelectDelegate = this.delegate("select");
 
+  componentDidMount() {
+    this._isMounted = true;
     // Text event listeners
     window.addEventListener(
       "focusin",
-      inputTextDelegate(el => this.inputFieldFocusIn(el))
+      this.inputTextDelegate(el => this.inputFieldFocusIn(el))
     );
 
     window.addEventListener(
       "focusout",
-      inputTextDelegate(el => this.inputFieldFocusOut(el))
+      this.inputTextDelegate(el => this.inputFieldFocusOut(el))
     );
     // Tel event listeners
     window.addEventListener(
       "focusin",
-      inputTelDelegate(el => this.inputFieldFocusIn(el))
+      this.inputTelDelegate(el => this.inputFieldFocusIn(el))
     );
 
     window.addEventListener(
       "focusout",
-      inputTelDelegate(el => this.inputFieldFocusOut(el))
+      this.inputTelDelegate(el => this.inputFieldFocusOut(el))
     );
     // Select event listeners
     window.addEventListener(
       "focusin",
-      inputSelectDelegate(el => this.inputFieldFocusIn(el))
+      this.inputSelectDelegate(el => this.inputFieldFocusIn(el))
     );
 
     window.addEventListener(
       "focusout",
-      inputSelectDelegate(el => this.inputFieldFocusOut(el))
+      this.inputSelectDelegate(el => this.inputFieldFocusOut(el))
     );
   }
 
   componentWillUnmount() {
-    const inputTextDelegate = this.delegate("input[type=text]");
-    const inputTelDelegate = this.delegate("input[type=tel]");
-    const inputSelectDelegate = this.delegate("select");
-
-    // Text event listeners
-    window.removeEventListener(
-      "focusin",
-      inputTextDelegate(el => this.inputFieldFocusIn(el))
-    );
-
-    window.removeEventListener(
-      "focusout",
-      inputTextDelegate(el => this.inputFieldFocusOut(el))
-    );
-    // Tel event listeners
-    window.removeEventListener(
-      "focusin",
-      inputTelDelegate(el => this.inputFieldFocusIn(el))
-    );
-
-    window.removeEventListener(
-      "focusout",
-      inputTelDelegate(el => this.inputFieldFocusOut(el))
-    );
-    // Select event listeners
-    window.removeEventListener(
-      "focusin",
-      inputSelectDelegate(el => this.inputFieldFocusIn(el))
-    );
-
-    window.removeEventListener(
-      "focusout",
-      inputSelectDelegate(el => this.inputFieldFocusOut(el))
-    );
+    this._isMounted = false;
   }
 
   handleSubmit = e => {
