@@ -1,4 +1,4 @@
-import React, { Component, Timeout } from "react";
+import React, { Component } from "react";
 import axios from "axios";
 import styled from "styled-components";
 import * as JsSearch from "js-search";
@@ -26,16 +26,6 @@ const CenterDiv = styled.div`
   justify-content: center;
   align-items: center;
 `;
-
-const Placeholder = ({ delayMs, fallback, children }) => {
-  return (
-    <Timeout ms={delayMs}>
-      {didTimeout => {
-        return didTimeout ? fallback : children;
-      }}
-    </Timeout>
-  );
-};
 
 class SearchWithResults extends Component {
   state = {
