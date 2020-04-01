@@ -8,33 +8,31 @@ import UpdateHomeForm from "../pages/UpdateHomeForm";
 import AllHomes from "../pages/AllHomes";
 import { theme, GlobalStyle } from "../styles/index";
 
-class App extends React.Component {
-  render() {
-    return (
-      <ThemeProvider theme={theme}>
-        <>
-          <GlobalStyle />
-          <Router>
-            <div className="App">
-              <Header theme={theme} />
-              <Route
-                exact
-                path="/addHome"
-                render={props => <AddHomeForm {...props} theme={theme} />}
-              />
-              <Route exact path="/homes" component={AllHomes} />
-              <Route
-                exact
-                path="/homes/:id/edit"
-                render={props => <UpdateHomeForm {...props} theme={theme} />}
-              />
-              <Route exact path="/" component={Main} />
-            </div>
-          </Router>
-        </>
-      </ThemeProvider>
-    );
-  }
-}
+const App = () => {
+  return (
+    <ThemeProvider theme={theme}>
+      <>
+        <GlobalStyle />
+        <Router>
+          <div className="App">
+            <Header theme={theme} />
+            <Route
+              exact
+              path="/addHome"
+              render={props => <AddHomeForm {...props} theme={theme} />}
+            />
+            <Route exact path="/homes" component={AllHomes} />
+            <Route
+              exact
+              path="/homes/:id/edit"
+              render={props => <UpdateHomeForm {...props} theme={theme} />}
+            />
+            <Route exact path="/" component={Main} />
+          </div>
+        </Router>
+      </>
+    </ThemeProvider>
+  );
+};
 
 export default App;

@@ -5,7 +5,7 @@ import { Cross, Tick } from "../../assets/svgr/index";
 
 const { formTextColor, letterSpacing, badInputColor, goodInputColor } = theme;
 
-const InputStyles = styled.div`
+const InputDiv = styled.div`
   position: relative;
   font-size: 18px;
   label {
@@ -65,7 +65,7 @@ const InputContainer = ({
     return string.charAt(0).toUpperCase() + string.slice(1);
   };
   return (
-    <InputStyles {...props}>
+    <InputDiv {...props}>
       {type === "select" ? (
         <Select
           id={`${name}-input`}
@@ -118,7 +118,7 @@ const InputContainer = ({
         }`}
         width="1em"
       />
-    </InputStyles>
+    </InputDiv>
   );
 };
 

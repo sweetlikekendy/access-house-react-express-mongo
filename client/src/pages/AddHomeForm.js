@@ -1,5 +1,5 @@
 import React from "react";
-import { AddressForm } from "../components/AddressForm";
+import { AddressForm, FormikAddressForm } from "../components/AddressForm";
 import { Container } from "../styles";
 
 const AddHomeForm = () => {
@@ -10,7 +10,8 @@ const AddHomeForm = () => {
   return (
     <Container>
       <h2 style={{ marginBottom: "1rem" }}>Add a New Home</h2>
-      <AddressForm httpreq="post" uri={BACKEND_API_URI} />
+      {/* <AddressForm httpreq="post" uri={BACKEND_API_URI} /> */}
+      <FormikAddressForm />
     </Container>
   );
 };

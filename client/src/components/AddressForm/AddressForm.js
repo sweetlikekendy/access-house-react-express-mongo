@@ -239,7 +239,6 @@ export default class AddressForm extends Component {
 
     e.preventDefault();
 
-    console.log(this.props.uri);
     if (lowerCaseHttpReq === "post") {
       axios
         .post(`${this.props.uri}`, {
