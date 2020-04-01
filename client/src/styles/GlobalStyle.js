@@ -43,7 +43,11 @@ const GlobalStyle = createGlobalStyle`
 
   input:focus,
   select:focus {
-    border-bottom: 2px solid ${props => props.theme.inputActiveColor};
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px ${props =>
+      props.theme.inputActiveColor};
+    ${
+      "" /* border-bottom: 2px solid ${props => props.theme.inputActiveColor}; */
+    }
   }
 
   .no-border {

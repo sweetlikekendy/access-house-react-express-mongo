@@ -1,5 +1,6 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
+import axios from "axios";
 import styled from "styled-components";
 import { Formik, useField } from "formik";
 import * as Yup from "yup";
@@ -116,90 +117,82 @@ const StyledForm = styled.form`
   }
 `;
 
-const MyTextInput = ({ label, ...props }) => {
+const MyTextInput = ({ label, focus, id, ...props }) => {
   // useField() returns [formik.getFieldProps(), formik.getFieldMeta()]
   // which we can spread on <input> and also replace ErrorMessage entirely.
   const [field, meta] = useField(props);
+  const { name, value } = field;
+  const { touched, error } = meta;
 
   return (
-    <InputDiv id={field.name}>
+    <InputDiv id={name}>
       <label
-        id={`${field.name}-label`}
-        className={props.focus ? "focused" : ""}
-        htmlFor={props.id || props.name}
+        id={`${name}-label`}
+        className={focus || value ? "focused" : ""}
+        htmlFor={id || name}
       >
         {label}
       </label>
       <Input
         className={`text-input
-          ${meta.touched && meta.error ? "bad-input" : ""} 
-         ${meta.touched && !meta.error ? "good-input" : ""}`}
-        id={`${field.name}-input`}
+          ${touched && error ? "bad-input" : ""} 
+         ${touched && !error ? "good-input" : ""}`}
+        id={`${name}-input`}
         width="100%"
         {...field}
         {...props}
       />
       <Cross
-        className={`cross ${
-          meta.touched && meta.error ? "display-cross" : null
-        }`}
+        className={`cross ${touched && error ? "display-cross" : null}`}
         width="1em"
       />
       <Tick
-        className={`tick ${
-          meta.touched && !meta.error ? "display-tick" : null
-        }`}
+        className={`tick ${touched && !error ? "display-tick" : null}`}
         width="1em"
       />
-      {meta.touched && meta.error ? (
-        <div className="error">{meta.error}</div>
-      ) : null}
+      {touched && error ? <div className="error">{error}</div> : null}
     </InputDiv>
   );
 };
 
-const MySelectInput = ({ label, ...props }) => {
+const MySelectInput = ({ label, focus, id, ...props }) => {
   // useField() returns [formik.getFieldProps(), formik.getFieldMeta()]
   // which we can spread on <input> and also replace ErrorMessage entirely.
   const [field, meta] = useField(props);
+  const { name, value } = field;
+  const { touched, error } = meta;
   return (
-    <InputDiv id={field.name}>
+    <InputDiv id={name}>
       <label
-        id={`${field.name}-label`}
-        className={props.focus ? "focused" : ""}
-        htmlFor={props.id || props.name}
+        id={`${name}-label`}
+        className={focus || value ? "focused" : ""}
+        htmlFor={id || name}
       >
         {label}
       </label>
       <Select
         className={`select-input
-          ${meta.touched && meta.error ? "bad-input" : ""} 
-         ${meta.touched && !meta.error ? "good-input" : ""}`}
-        id={`${field.name}-input`}
+          ${touched && error ? "bad-input" : ""} 
+         ${touched && !error ? "good-input" : ""}`}
+        id={`${name}-input`}
         width="100%"
         {...field}
         {...props}
       />
       <Cross
-        className={`cross ${
-          meta.touched && meta.error ? "display-cross" : null
-        }`}
+        className={`cross ${touched && error ? "display-cross" : null}`}
         width="1em"
       />
       <Tick
-        className={`tick ${
-          meta.touched && !meta.error ? "display-tick" : null
-        }`}
+        className={`tick ${touched && !error ? "display-tick" : null}`}
         width="1em"
       />
-      {meta.touched && meta.error ? (
-        <div className="error">{meta.error}</div>
-      ) : null}
+      {touched && error ? <div className="error">{error}</div> : null}
     </InputDiv>
   );
 };
 
-const FormikAddressForm = props => {
+const FormikAddressForm = ({ uri, httpreq, ...props }) => {
   const [addressFocus, setAddressFocus] = useState(false);
   const [cityFocus, setCityFocus] = useState(false);
   const [stateFocus, setStateFocus] = useState(false);
@@ -327,16 +320,54 @@ const FormikAddressForm = props => {
             .required("Required")
         })}
         onSubmit={(values, { setSubmitting }) => {
-          setTimeout(() => {
-            alert(JSON.stringify(values, null, 2));
-            setSubmitting(false);
-          }, 400);
+          // setTimeout(() => {
+          //   alert(JSON.stringify(values, null, 2));
+
+          // }, 10000);
+          const lowerCaseHttpReq = httpreq.toLowerCase();
+
+          // e.preventDefault();
+          const { address, city, state, zip, code } = values;
+          if (lowerCaseHttpReq === "post") {
+            axios
+              .post(`${uri}`, {
+                address,
+                city,
+                state,
+                zip,
+                code
+              })
+              .then(res => {
+                if (res.data.redirect === "/homes") {
+                  window.location = "/homes";
+                }
+              })
+              .catch(err => console.log(err));
+          }
+          if (lowerCaseHttpReq === "patch") {
+            axios
+              .patch(`${uri}`, {
+                address,
+                city,
+                state,
+                zip,
+                code
+              })
+              .then(res => {
+                if (res.data.redirect === "/homes") {
+                  window.location = "/homes";
+                }
+              })
+              .catch(err => console.log(err));
+          }
+          setSubmitting(false);
         }}
       >
         {formik => (
           <StyledForm
             name="contact"
             method="POST"
+            onSubmit={formik.handleSubmit}
             // action="/success"
           >
             <MyTextInput
@@ -372,6 +403,8 @@ const FormikAddressForm = props => {
                 value="SUBMIT"
               />
             </RightAlignButton>
+            {/* <pre>{JSON.stringify(formik.values, null, 2)}</pre>
+            <pre>{JSON.stringify(formik.values, null, 2)}</pre> */}
           </StyledForm>
         )}
       </Formik>
