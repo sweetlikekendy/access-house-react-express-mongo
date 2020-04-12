@@ -3,12 +3,9 @@ import axios from "axios";
 import styled from "styled-components";
 import HomeInfo from "../components/HomeInfo";
 import { AddressForm } from "../components/AddressForm";
-import { Container } from "../styles";
+import { Container, FormContainer } from "../styles";
 
 const StyledUpdateHomeForm = styled.div`
-  max-width: ${props => props.theme.formWidth};
-  margin: 2rem auto 0;
-  padding: 0 2rem;
   h3 {
     text-align: center;
     margin: 2rem 0 1rem;
@@ -100,8 +97,8 @@ export default class UpdateHomeForm extends Component {
             code={currentCode}
           />
         </Container>
-        <h3>Update Address</h3>
         <Container>
+          <h3>Update Address</h3>
           <AddressForm httpreq="patch" uri={BACKEND_API_URI_EDIT} />
         </Container>
       </StyledUpdateHomeForm>

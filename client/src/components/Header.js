@@ -1,11 +1,12 @@
 import React from "react";
 import NavMenu from "./NavMenu";
+import { HeaderStyles } from "../styles";
 
 const Header = props => {
   return (
-    <header>
+    <HeaderStyles>
       <NavMenu theme={props.theme} />
-    </header>
+    </HeaderStyles>
   );
 };
 

@@ -1,6 +1,6 @@
 import React from "react";
 import { FormikAddressForm } from "../components/AddressForm";
-import { Container } from "../styles";
+import { Container, FormContainer } from "../styles";
 
 const AddHomeForm = () => {
   const BACKEND_API_URI =
@@ -9,8 +9,10 @@ const AddHomeForm = () => {
       : "https://protected-oasis-33800.herokuapp.com/api/homes";
   return (
     <Container>
-      <h2 style={{ marginBottom: "1rem" }}>Add a New Home</h2>
-      <FormikAddressForm httpreq="post" uri={BACKEND_API_URI} />
+      <FormContainer>
+        <h2 style={{ marginBottom: "1rem" }}>Add a New Home</h2>
+        <FormikAddressForm httpreq="post" uri={BACKEND_API_URI} />
+      </FormContainer>
     </Container>
   );
 };

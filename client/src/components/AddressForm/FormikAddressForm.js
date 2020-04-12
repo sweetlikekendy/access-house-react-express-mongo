@@ -403,8 +403,6 @@ const FormikAddressForm = ({ uri, httpreq, ...props }) => {
                 value="SUBMIT"
               />
             </RightAlignButton>
-            {/* <pre>{JSON.stringify(formik.values, null, 2)}</pre>
-            <pre>{JSON.stringify(formik.values, null, 2)}</pre> */}
           </StyledForm>
         )}
       </Formik>
