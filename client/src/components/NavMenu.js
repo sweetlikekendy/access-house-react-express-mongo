@@ -47,8 +47,7 @@ const LogoContainer = styled.div`
 `;
 
 const StyledMenu = styled.nav`
-  position: absolute;
-  z-index: 5;
+  position: fixed;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -95,6 +94,7 @@ const Menu = ({ open }) => {
 
 const StyledBurger = styled.button`
   position: absolute;
+  z-index: 10;
   top: 1.75rem;
   display: flex;
   flex-direction: column;
@@ -105,7 +105,6 @@ const StyledBurger = styled.button`
   border: none;
   cursor: pointer;
   padding: 0;
-  z-index: 10;
 
   &:focus {
     outline: none;

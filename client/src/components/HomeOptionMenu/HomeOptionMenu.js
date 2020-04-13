@@ -9,7 +9,9 @@ import { theme } from "../../styles";
 const { dropdownMenuBgColor, fontColor } = theme;
 
 const Container = styled.div`
-  flex-basis: 10px;
+  position: absolute;
+  top: 20%;
+  right: 5%;
   cursor: pointer;
   a {
     color: ${fontColor};

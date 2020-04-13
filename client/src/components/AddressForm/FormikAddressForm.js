@@ -13,6 +13,7 @@ const stateValues = StateValues;
 
 const InputDiv = styled.div`
   position: relative;
+  z-index: 1;
   font-size: 18px;
   label {
     padding: 0 0.25rem;

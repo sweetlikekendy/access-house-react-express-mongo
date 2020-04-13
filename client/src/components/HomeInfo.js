@@ -7,8 +7,7 @@ const { fontColor, formBorderColor } = theme;
 
 const HomeResult = styled.div`
   /* keep this div lower than the mobile menu  */
-  /* position: relative; */
-  /* z-index: -1; */
+  position: relative;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
