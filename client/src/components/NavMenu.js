@@ -47,6 +47,8 @@ const LogoContainer = styled.div`
 `;
 
 const StyledMenu = styled.nav`
+  position: absolute;
+  z-index: 5;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -57,13 +59,11 @@ const StyledMenu = styled.nav`
   height: 100vh;
   text-align: left;
   padding: 1rem;
-  position: fixed;
   top: 0;
   left: 0;
   transition: transform 0.3s ease-in-out;
   width: 75%;
   overflow: hidden;
-  z-index: 5;
   box-shadow: ${({ open }) => open && `5px -5px 10px #cfcfcf`};
   li:first-of-type {
     display: flex;

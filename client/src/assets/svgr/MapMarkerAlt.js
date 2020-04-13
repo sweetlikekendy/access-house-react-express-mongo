@@ -8,6 +8,7 @@ function SvgMapMarkerAlt(props) {
     <svg
       height={25}
       style={{
+        zIndex: "-1",
         msTransform: "rotate(360deg)",
         WebkitTransform: "rotate(360deg)"
       }}

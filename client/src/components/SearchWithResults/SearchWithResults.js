@@ -3,9 +3,10 @@ import axios from "axios";
 import styled from "styled-components";
 import * as JsSearch from "js-search";
 import Searchbar from "./Searchbar";
-import { HomeOptionMenu } from "../HomeOptionMenu";
+
 import { Loader } from "../../assets/svgr";
 import HomeInfo from "../HomeInfo";
+import { HomeOptionMenu } from "../HomeOptionMenu";
 
 const StyledFilterableHomeTable = styled.div`
   max-width: ${props => props.theme.formWidth};
@@ -179,12 +180,13 @@ class SearchWithResults extends Component {
             : `${queryResults.length} items found from search query`}
         </p>
 
-        <div>
+        <div className="query-results">
           {queryResults.map(item => {
             const { _id, address, city, state, zip, code } = item;
             return (
               <HomeInfo
                 key={_id}
+                id={_id}
                 address={address}
                 city={city}
                 state={state}

@@ -84,24 +84,26 @@ export default class UpdateHomeForm extends Component {
       BACKEND_API_URI_EDIT
     } = this.state;
     return (
-      <StyledUpdateHomeForm>
-        <Container>
-          <h2>Update Home</h2>
-          <h3>Current Address</h3>
-          <HomeInfo
-            className="border-top-bottom"
-            address={currentAddress}
-            city={currentCity}
-            state={currentState}
-            zip={currentZip}
-            code={currentCode}
-          />
-        </Container>
-        <Container>
-          <h3>Update Address</h3>
-          <AddressForm httpreq="patch" uri={BACKEND_API_URI_EDIT} />
-        </Container>
-      </StyledUpdateHomeForm>
+      <FormContainer>
+        <StyledUpdateHomeForm>
+          <Container>
+            <h2>Update Home</h2>
+            <h3>Current Address</h3>
+            <HomeInfo
+              className="border-top-bottom"
+              address={currentAddress}
+              city={currentCity}
+              state={currentState}
+              zip={currentZip}
+              code={currentCode}
+            />
+          </Container>
+          <Container>
+            <h3>Update Address</h3>
+            <AddressForm httpreq="patch" uri={BACKEND_API_URI_EDIT} />
+          </Container>
+        </StyledUpdateHomeForm>
+      </FormContainer>
     );
   }
 }

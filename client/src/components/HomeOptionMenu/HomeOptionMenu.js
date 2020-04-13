@@ -9,9 +9,7 @@ import { theme } from "../../styles";
 const { dropdownMenuBgColor, fontColor } = theme;
 
 const Container = styled.div`
-  position: absolute;
-  top: 20%;
-  right: 5%;
+  flex-basis: 10px;
   cursor: pointer;
   a {
     color: ${fontColor};
@@ -25,7 +23,7 @@ const DropdownMenu = styled.div`
 
 const MenuList = styled.ul`
   position: absolute;
-  z-index: 2;
+  z-index: 1;
   top: 0;
   right: 0;
   font-size: 16px;
@@ -51,7 +49,10 @@ const MenuList = styled.ul`
 `;
 
 const DotsContainer = styled.div`
-  padding: 0.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.3rem 0.1rem;
   background-color: ${({ openState }) => openState && `${dropdownMenuBgColor}`};
   svg {
     circle {
@@ -108,10 +109,6 @@ const HomeOptionMenu = ({ id, ...props }) => {
     axios
       .delete(`${BACKEND_API_URI}`)
       .then(res => {
-        // if (res.status === 204) {
-        //   window.location = "/homes";
-        //   return false;
-
         if (res.data.redirect === "/homes") {
           window.location = "/homes";
         }

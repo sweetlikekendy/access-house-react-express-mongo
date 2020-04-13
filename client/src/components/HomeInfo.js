@@ -2,11 +2,13 @@ import React from "react";
 import styled from "styled-components";
 import { theme } from "../styles";
 import { MapMarker, Unlock } from "../assets/svgr";
-
+import { HomeOptionMenu } from "./HomeOptionMenu";
 const { fontColor, formBorderColor } = theme;
 
 const HomeResult = styled.div`
-  position: relative;
+  /* keep this div lower than the mobile menu  */
+  /* position: relative; */
+  /* z-index: -1; */
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -20,7 +22,7 @@ const HomeResult = styled.div`
     margin-right: 0.5rem;
   }
   .location {
-    flex-basis: 210px;
+    flex-basis: 75%;
     color: ${fontColor};
     font-size: 14px;
     display: flex;
@@ -39,6 +41,11 @@ const HomeResult = styled.div`
     }
   }
 
+  @media screen and (min-width: 500px) {
+    .location {
+      flex-basis: 300px;
+    }
+  }
   @media screen and (min-width: 768px) {
     .location {
       flex-basis: 375px;
@@ -79,6 +86,7 @@ const HomeInfo = ({
           <p>{code}</p>
         </div>
       </div>
+      {/* this is so that the menu option doesn't show up on the update home page */}
       {children}
     </HomeResult>
   );
